@@ -77,7 +77,10 @@ class Image
             return $this;
         }
 
+        \imagealphablending($this->image, false);
+        \imagesavealpha($this->image, true);
         \imagecolortransparent($this->image, \imagecolorallocate($this->image, 0, 0, 0));
+
         $this->width = $width;
         $this->height = $height;
         return $this;
