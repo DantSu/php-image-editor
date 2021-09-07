@@ -2,14 +2,22 @@
 
 namespace DantSu\PHPImageEditor;
 
+/**
+ * DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extension. Resize, crop, merge, draw, and many more options !
+ *
+ * @package DantSu\PHPImageEditor
+ * @author Franck Alary
+ * @access public
+ * @see https://github.com/DantSu/php-image-editor
+ */
 class Image
 {
     const ALIGN_LEFT = 'left';
     const ALIGN_CENTER = 'center';
     const ALIGN_RIGHT = 'right';
     const ALIGN_TOP = 'top';
-    const ALIGN_MIDDLE = 'bottom';
-    const ALIGN_BOTTOM = 'middle';
+    const ALIGN_MIDDLE = 'middle';
+    const ALIGN_BOTTOM = 'bottom';
 
 
     private $image;
@@ -19,6 +27,8 @@ class Image
 
 
     /**
+     * Return the image width
+     *
      * @return int
      */
     public function getWidth(): int
@@ -27,6 +37,8 @@ class Image
     }
 
     /**
+     * Return the image height
+     *
      * @return int
      */
     public function getHeight(): int
@@ -35,7 +47,9 @@ class Image
     }
 
     /**
+     * Return the image type
      * Image type : 1 GIF; 2 JPG; 3 PNG
+     *
      * @return int
      */
     public function getType(): int
@@ -44,7 +58,8 @@ class Image
     }
 
     /**
-     * @return resource
+     * Return image resource
+     * @return resource|\GdImage
      */
     public function getImage()
     {
@@ -52,6 +67,8 @@ class Image
     }
 
     /**
+     * Return true if image is initialized
+     *
      * @return bool
      */
     public function isImageDefined(): bool
@@ -64,13 +81,25 @@ class Image
     //===============================================================================================================================
 
     /**
-     * Create a new background transparent image
+     * (Static method) Create a new image with transparent background
      *
-     * @param $width
-     * @param $height
+     * @param int $width
+     * @param int $height
+     * @return Image
+     */
+    public static function create(int $width, int $height): Image
+    {
+        return (new Image)->createNew($width, $height);
+    }
+
+    /**
+     * Create a new image with transparent background
+     *
+     * @param int $width
+     * @param int $height
      * @return $this
      */
-    public function create($width, $height): Image
+    public function createNew(int $width, int $height): Image
     {
         if (($this->image = \imagecreatetruecolor($width, $height)) === false) {
             $this->resetFields();
@@ -86,12 +115,24 @@ class Image
         return $this;
     }
 
+    /**
+     * (Static method) Open image from local path or URL.
+     *
+     * @param string $path
+     * @return Image
+     */
+    public static function fromPath(string $path): Image
+    {
+        return (new Image)->path($path);
+    }
 
     /**
+     * Open image from local path or URL.
+     *
      * @param string $path
      * @return $this
      */
-    public function fromPath(string $path): Image
+    public function path(string $path): Image
     {
         $imageSize = \getimagesize($path);
 
@@ -127,25 +168,49 @@ class Image
         return $this;
     }
 
+    /**
+     * (Static method) Open an uploaded image from html form (using $file["tmp_name"]).
+     *
+     * @param array $file
+     * @return Image
+     */
+    public static function fromForm(array $file): Image
+    {
+        return (new Image)->form($file);
+    }
 
     /**
-     * @param array $files
+     * Open an uploaded image from html form (using $file["tmp_name"]).
+     *
+     * @param array $file
      * @return $this
      */
-    public function fromForm(array $files): Image
+    public function form(array $file): Image
     {
-        if (isset($files) && isset($files["name"]) && $files["name"] != "") {
-            $this->fromPath($files["tmp_name"]);
+        if (isset($file) && isset($file["name"]) && $file["name"] != "") {
+            $this->fromPath($file["tmp_name"]);
         }
         return $this;
     }
 
+    /**
+     * (Static method) Create an Image instance from image raw data.
+     *
+     * @param string $data
+     * @return Image
+     */
+    public static function fromData(string $data): Image
+    {
+        return (new Image)->data($data);
+    }
 
     /**
+     * Create an Image instance from image raw data.
+     *
      * @param string $data
      * @return $this
      */
-    public function fromData(string $data): Image
+    public function data(string $data): Image
     {
         if (($this->image = \imagecreatefromstring($data)) === false) {
             return $this->resetFields();
@@ -165,22 +230,46 @@ class Image
         return $this;
     }
 
+    /**
+     * (Static method) Create an Image instance from base64 image data.
+     *
+     * @param string $base64
+     * @return Image
+     */
+    public static function fromBase64(string $base64): Image
+    {
+        return (new Image)->base64($base64);
+    }
 
     /**
+     * Create an Image instance from base64 image data.
+     *
      * @param string $base64
      * @return $this
      */
-    public function fromBase64(string $base64): Image
+    public function base64(string $base64): Image
     {
         return $this->fromData(\base64_decode($base64));
     }
 
+    /**
+     * (Static method) Open image from URL with cURL.
+     *
+     * @param string $url
+     * @return Image
+     */
+    public static function fromCurl(string $url): Image
+    {
+        return (new Image)->curl($url);
+    }
 
     /**
+     * Open image from URL with cURL.
+     *
      * @param string $url
      * @return $this
      */
-    public function fromCurl(string $url): Image
+    public function curl(string $url): Image
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -199,6 +288,8 @@ class Image
 
 
     /**
+     * Destroy image
+     *
      * @return $this
      */
     public function destroy(): Image
@@ -211,6 +302,8 @@ class Image
     }
 
     /**
+     * Reset private fields
+     *
      * @return $this
      */
     private function resetFields(): Image
@@ -229,6 +322,13 @@ class Image
     //============================================================UTILS==============================================================
     //===============================================================================================================================
 
+    /**
+     * Convert X position from `Image::ALIGN_...` to int position.
+     *
+     * @param int|string $posX
+     * @param int $width
+     * @return int
+     */
     private function convertPosX($posX, int $width = 0): int
     {
         switch ($posX) {
@@ -242,6 +342,13 @@ class Image
         return $posX;
     }
 
+    /**
+     * Convert Y position from `Image::ALIGN_...` to int position.
+     *
+     * @param int|string $posY
+     * @param int $height
+     * @return int
+     */
     private function convertPosY($posY, int $height = 0): int
     {
         switch ($posY) {
@@ -261,6 +368,8 @@ class Image
 
 
     /**
+     * Rotate the image
+     *
      * @param int $angle
      * @return $this
      */
@@ -279,6 +388,8 @@ class Image
     }
 
     /**
+     * Resize the image keeping the proportions.
+     *
      * @param int $width
      * @param int $height
      * @return $this
@@ -293,10 +404,12 @@ class Image
             $finalHeight = $height;
         }
 
-        return $this->resizeDeformation($finalWidth, $finalHeight);
+        return $this->resize($finalWidth, $finalHeight);
     }
 
     /**
+     * Downscale the image keeping the proportions.
+     *
      * @param int $maxWidth
      * @param int $maxHeight
      * @return $this
@@ -321,15 +434,17 @@ class Image
             $finalHeight = $this->height;
         }
 
-        return $this->resizeDeformation($finalWidth, $finalHeight);
+        return $this->resize($finalWidth, $finalHeight);
     }
 
     /**
+     * Resize the image.
+     *
      * @param int $width
      * @param int $height
      * @return $this
      */
-    public function resizeDeformation(int $width, int $height): Image
+    public function resize(int $width, int $height): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -351,13 +466,16 @@ class Image
     }
 
     /**
+     * Downscale the image keeping the proportions then crop to fit to $width and $height params.
+     * Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
+     *
      * @param int $width
      * @param int $height
-     * @param int|string $horizontal
-     * @param int|string $vertical
+     * @param int|string $anchorX
+     * @param int|string $anchorY
      * @return $this
      */
-    public function downscaleAndCrop(int $width, int $height, $horizontal = 0, $vertical = 0): Image
+    public function downscaleAndCrop(int $width, int $height, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE): Image
     {
         if ($this->width < $width) {
             $width = $this->width;
@@ -376,20 +494,23 @@ class Image
         }
 
         if ($this->downscaleProportion($finalWidth, $finalHeight)) {
-            $this->crop($width, $height, $horizontal, $vertical);
+            $this->crop($width, $height, $anchorX, $anchorY);
         }
 
         return $this;
     }
 
     /**
+     * Crop to fit to $width and $height params.
+     * Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
+     *
      * @param int $width
      * @param int $height
-     * @param int|string $horizontal
-     * @param int|string $vertical
+     * @param int|string $anchorX
+     * @param int|string $anchorY
      * @return $this
      */
-    public function crop(int $width, int $height, $horizontal = 0, $vertical = 0): Image
+    public function crop(int $width, int $height, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -404,25 +525,25 @@ class Image
 
         //==============================================
 
-        $horizontal = $this->convertPosX($horizontal, $width);
-        $vertical = $this->convertPosY($vertical, $height);
+        $anchorX = $this->convertPosX($anchorX, $width);
+        $anchorY = $this->convertPosY($anchorY, $height);
 
         //==============================================
 
-        if ($horizontal < 0) {
-            $horizontal = 0;
+        if ($anchorX < 0) {
+            $anchorX = 0;
         }
 
-        if ($horizontal + $width > $this->width) {
-            $horizontal = $this->width - $width;
+        if ($anchorX + $width > $this->width) {
+            $anchorX = $this->width - $width;
         }
 
-        if ($vertical < 0) {
-            $vertical = 0;
+        if ($anchorY < 0) {
+            $anchorY = 0;
         }
 
-        if ($vertical + $height > $this->height) {
-            $vertical = $this->height - $height;
+        if ($anchorY + $height > $this->height) {
+            $anchorY = $this->height - $height;
         }
 
         //==============================================
@@ -433,7 +554,7 @@ class Image
             \imagesavealpha($image, true) !== false &&
             ($transparent = $this->colorAllocate('#000000FF')) !== false &&
             \imagefill($image, 0, 0, $transparent) !== false &&
-            \imagecopyresampled($image, $this->image, 0, 0, $horizontal, $vertical, $width, $height, $width, $height) !== false
+            \imagecopyresampled($image, $this->image, 0, 0, $anchorX, $anchorY, $width, $height, $width, $height) !== false
         ) {
             $this->image = $image;
             $this->width = $width;
@@ -448,10 +569,12 @@ class Image
     //===============================================================================================================================
 
     /**
+     * Format the string color.
+     *
      * @param string $stringColor
      * @return string
      */
-    public static function formatColor(string $stringColor): string
+    private static function formatColor(string $stringColor): string
     {
         $stringColor = \trim(\str_replace('#', '', $stringColor));
         switch (\mb_strlen($stringColor)) {
@@ -473,10 +596,12 @@ class Image
     }
 
     /**
+     * Allocate a new color to the image.
+     *
      * @param string $color
      * @return int
      */
-    public function colorAllocate(string $color): int
+    private function colorAllocate(string $color): int
     {
         $color = static::formatColor($color);
         $red = \hexdec(\substr($color, 0, 2));
@@ -498,12 +623,14 @@ class Image
     //===============================================================================================================================
 
     /**
+     * Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
+     *
      * @param Image $image
-     * @param int $posX
-     * @param int $posY
+     * @param int|string $posX
+     * @param int|string $posY
      * @return $this
      */
-    public function pasteOn(Image $image, $posX = 0, $posY = 0): Image
+    public function pasteOn(Image $image, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_CENTER): Image
     {
         if (!$this->isImageDefined() || !$image->isImageDefined()) {
             return $this;
@@ -522,6 +649,8 @@ class Image
     }
 
     /**
+     * Use a grayscale image (`$mask`) to apply transparency to the image.
+     *
      * @param Image $mask
      * @return $this
      */
@@ -575,6 +704,8 @@ class Image
     //===============================================================================================================================
 
     /**
+     * Apply a grayscale filter on the image.
+     *
      * @return $this
      */
     public function grayscale(): Image
@@ -588,6 +719,8 @@ class Image
     }
 
     /**
+     * Write text on the image.
+     *
      * @param string $string
      * @param string $fontPath
      * @param int $fontSize
@@ -606,6 +739,8 @@ class Image
     }
 
     /**
+     * Write text on the image and get the bounding box of the text in the image.
+     *
      * @param string $string
      * @param string $fontPath
      * @param int $fontSize
@@ -729,6 +864,8 @@ class Image
     }
 
     /**
+     * Draw a rectangle.
+     *
      * @param int $left
      * @param int $top
      * @param int $right
@@ -756,6 +893,8 @@ class Image
 
 
     /**
+     * Draw a Line from `$originX, $originY` to `$dstX, $dstY`.
+     *
      * @param int $originX
      * @param int $originY
      * @param int $dstX
@@ -775,6 +914,8 @@ class Image
     }
 
     /**
+     * Draw a line using angle and length.
+     *
      * @param int $originX
      * @param int $originY
      * @param int $angle
@@ -812,6 +953,8 @@ class Image
     }
 
     /**
+     * Draw an arrow with angle and length.
+     *
      * @param int $originX
      * @param int $originY
      * @param int $angle
@@ -834,6 +977,8 @@ class Image
 
 
     /**
+     * Draw and arrow from `$originX, $originY` to `$dstX, $dstY`.
+     *
      * @param int $originX
      * @param int $originY
      * @param int $dstX
@@ -853,6 +998,8 @@ class Image
     }
 
     /**
+     * Draw a circle.
+     *
      * @param int $posX
      * @param int $posY
      * @param int $diameter
@@ -904,6 +1051,8 @@ class Image
     //===============================================================================================================================
 
     /**
+     * Save the image to PNG file.
+     *
      * @param string $path
      * @return bool
      */
@@ -916,6 +1065,8 @@ class Image
     }
 
     /**
+     * Save the image to JPG file.
+     *
      * @param string $path
      * @param int $quality
      * @return bool
@@ -929,6 +1080,8 @@ class Image
     }
 
     /**
+     * Save the image to GIF file.
+     *
      * @param string $path
      * @return bool
      */
@@ -940,6 +1093,9 @@ class Image
         return \imagegif($this->image, $path);
     }
 
+    /**
+     * Display in PNG format.
+     */
     public function displayPNG()
     {
         if ($this->isImageDefined()) {
@@ -947,6 +1103,11 @@ class Image
         }
     }
 
+    /**
+     * Display in JPG format.
+     *
+     * @param int $quality
+     */
     public function displayJPG(int $quality = -1)
     {
         if ($this->isImageDefined()) {
@@ -954,6 +1115,9 @@ class Image
         }
     }
 
+    /**
+     * Display in GIF format.
+     */
     public function displayGIF()
     {
         if ($this->isImageDefined()) {
@@ -962,6 +1126,8 @@ class Image
     }
 
     /**
+     * Get image raw data
+     *
      * @param string $nameFunction
      * @param int $quality
      * @return string
@@ -981,6 +1147,8 @@ class Image
     }
 
     /**
+     * Get image PNG raw data
+     *
      * @return string
      */
     public function getDataPNG(): string
@@ -989,6 +1157,8 @@ class Image
     }
 
     /**
+     * Get image JPG raw data
+     *
      * @param int $quality
      * @return string
      */
@@ -998,6 +1168,8 @@ class Image
     }
 
     /**
+     * Get image GIF raw data
+     *
      * @return string
      */
     public function getDataGIF(): string
@@ -1006,6 +1178,8 @@ class Image
     }
 
     /**
+     * Get image PNG base64 data
+     *
      * @return string
      */
     public function getBase64PNG(): string
@@ -1014,14 +1188,19 @@ class Image
     }
 
     /**
+     * Get image JPG base64 data
+     *
+     * @param int $quality
      * @return string
      */
-    public function getBase64JPG(): string
+    public function getBase64JPG(int $quality = -1): string
     {
-        return \base64_encode($this->getDataJPG());
+        return \base64_encode($this->getDataJPG($quality));
     }
 
     /**
+     * Get image GIF base64 data
+     *
      * @return string
      */
     public function getBase64GIF(): string
@@ -1030,6 +1209,8 @@ class Image
     }
 
     /**
+     * Get image PNG base64 data for <img src=""> tag.
+     *
      * @return string
      */
     public function getBase64SourcePNG(): string
@@ -1038,14 +1219,19 @@ class Image
     }
 
     /**
+     * Get image JPG base64 data for <img src=""> tag.
+     *
+     * @param int $quality
      * @return string
      */
-    public function getBase64SourceJPG(): string
+    public function getBase64SourceJPG(int $quality = -1): string
     {
-        return 'data:image/jpeg;base64,' . $this->getBase64JPG();
+        return 'data:image/jpeg;base64,' . $this->getBase64JPG($quality);
     }
 
     /**
+     * Get image GIF base64 data for <img src=""> tag.
+     *
      * @return string
      */
     public function getBase64SourceGIF(): string

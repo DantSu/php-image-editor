@@ -8,8 +8,7 @@ use \DantSu\PHPImageEditor\Image;
 \header('Content-type: image/png');
 
 
-$image = (new Image())
-    ->create(500, 500)
+$image = Image::create(500, 500)
     ->drawRectangle(0, 0, 500, 500, '#444')
     ->drawRectangle(0, 350, 500, 500, '#FF8800')
     ->writeText('I got the power !', __DIR__ . '/resources/font.ttf', 40, '#FFFFFF', Image::ALIGN_CENTER, 310)
