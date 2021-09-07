@@ -1,7 +1,7 @@
 {
   "name": "dantsu/php-image-editor",
   "type": "library",
-  "description": "PHP library to easily edit image with gd2 functions.",
+  "description": "PHP library to easily edit image with GD extension.",
   "keywords": [
     "php",
     "gd2",
@@ -22,7 +22,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0"
+    "php": "^7.0",
+    "ext-gd": "*"
   },
   "autoload": {
     "psr-0": {
