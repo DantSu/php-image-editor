@@ -1,6 +1,18 @@
 {
   "name": "dantsu/php-image-editor",
+  "type": "library",
   "description": "PHP library to easily edit image with gd2 functions.",
+  "keywords": [
+    "php",
+    "gd2",
+    "edit",
+    "edition",
+    "editor",
+    "image",
+    "picture",
+    "photo"
+  ],
+  "homepage": "https://github.com/DantSu/php-image-editor",
   "license": "MIT",
   "authors": [
     {
