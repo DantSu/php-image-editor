@@ -1,0 +1,20 @@
+{
+  "name": "dantsu/php-image-editor",
+  "description": "PHP library to edit image with gd2 functions.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Franck ALARY",
+      "homepage": "https://github.com/DantSu",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "DantSu\\PHPImageEditor\\": "src/"
+    }
+  }
+}
