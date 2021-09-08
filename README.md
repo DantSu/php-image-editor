@@ -2,6 +2,10 @@
 
 PHP library to easily edit image with GD extension. Resize, crop, merge, draw, and many more options !
 
+## ✨ Supporting
+
+⭐ Star this repository to support this project. You will contribute to increase the visibility of this library 🙂
+
 ## Installation
 
 Install this library easily with composer :
@@ -61,3 +65,10 @@ Image::fromPath(__DIR__ . '/resources/photo.jpg')
 ## Documentation
 
 See [DantSu\PHPImageEditor\Image](./docs/classes/DantSu/PHPImageEditor/Image.md) documentation class for more details.
+
+## Contributing
+
+Please fork this repository and contribute back using pull requests.
+
+Any contributions, large or small, major features, bug fixes, are welcomed and appreciated but will be thoroughly reviewed.
+
