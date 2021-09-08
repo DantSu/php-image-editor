@@ -8,8 +8,9 @@ namespace DantSu\PHPImageEditor;
  * @package DantSu\PHPImageEditor
  * @author Franck Alary
  * @access public
- * @see https://github.com/DantSu/php-image-editor
+ * @see https://github.com/DantSu/php-image-editor Github page of this project
  */
+
 class Image
 {
     const ALIGN_LEFT = 'left';
@@ -19,17 +20,28 @@ class Image
     const ALIGN_MIDDLE = 'middle';
     const ALIGN_BOTTOM = 'bottom';
 
-
+    /**
+     * @var $image resource|\GdImage
+     */
     private $image;
+    /**
+     * @var $type int
+     */
     private $type;
+    /**
+     * @var $width int
+     */
     private $width;
+    /**
+     * @var $height int
+     */
     private $height;
 
 
     /**
      * Return the image width
      *
-     * @return int
+     * @return int Image width
      */
     public function getWidth(): int
     {
@@ -39,7 +51,7 @@ class Image
     /**
      * Return the image height
      *
-     * @return int
+     * @return int Image height
      */
     public function getHeight(): int
     {
@@ -50,7 +62,7 @@ class Image
      * Return the image type
      * Image type : 1 GIF; 2 JPG; 3 PNG
      *
-     * @return int
+     * @return int Image type
      */
     public function getType(): int
     {
@@ -59,7 +71,7 @@ class Image
 
     /**
      * Return image resource
-     * @return resource|\GdImage
+     * @return resource|\GdImage Image resource
      */
     public function getImage()
     {
@@ -69,7 +81,7 @@ class Image
     /**
      * Return true if image is initialized
      *
-     * @return bool
+     * @return bool Is image initialized
      */
     public function isImageDefined(): bool
     {
@@ -83,23 +95,23 @@ class Image
     /**
      * (Static method) Create a new image with transparent background
      *
-     * @param int $width
-     * @param int $height
-     * @return Image
+     * @param int $width Pixel width of the image
+     * @param int $height Pixel height of the image
+     * @return Image Return Image instance
      */
-    public static function create(int $width, int $height): Image
+    public static function fromScratch(int $width, int $height): Image
     {
-        return (new Image)->createNew($width, $height);
+        return (new Image)->create($width, $height);
     }
 
     /**
      * Create a new image with transparent background
      *
-     * @param int $width
-     * @param int $height
-     * @return $this
+     * @param int $width Pixel width of the image
+     * @param int $height Pixel height of the image
+     * @return $this Fluent interface
      */
-    public function createNew(int $width, int $height): Image
+    public function create(int $width, int $height): Image
     {
         if (($this->image = \imagecreatetruecolor($width, $height)) === false) {
             $this->resetFields();
@@ -118,8 +130,8 @@ class Image
     /**
      * (Static method) Open image from local path or URL.
      *
-     * @param string $path
-     * @return Image
+     * @param string $path Path to the image file
+     * @return Image Return Image instance
      */
     public static function fromPath(string $path): Image
     {
@@ -129,8 +141,8 @@ class Image
     /**
      * Open image from local path or URL.
      *
-     * @param string $path
-     * @return $this
+     * @param string $path Path to the image file
+     * @return $this Fluent interface
      */
     public function path(string $path): Image
     {
@@ -171,8 +183,8 @@ class Image
     /**
      * (Static method) Open an uploaded image from html form (using $file["tmp_name"]).
      *
-     * @param array $file
-     * @return Image
+     * @param array $file File array from html form
+     * @return Image Return Image instance
      */
     public static function fromForm(array $file): Image
     {
@@ -182,8 +194,8 @@ class Image
     /**
      * Open an uploaded image from html form (using $file["tmp_name"]).
      *
-     * @param array $file
-     * @return $this
+     * @param array $file File array from html form
+     * @return $this Fluent interface
      */
     public function form(array $file): Image
     {
@@ -196,8 +208,8 @@ class Image
     /**
      * (Static method) Create an Image instance from image raw data.
      *
-     * @param string $data
-     * @return Image
+     * @param string $data Raw data of the image
+     * @return Image Return Image instance
      */
     public static function fromData(string $data): Image
     {
@@ -207,8 +219,8 @@ class Image
     /**
      * Create an Image instance from image raw data.
      *
-     * @param string $data
-     * @return $this
+     * @param string $data Raw data of the image
+     * @return $this Fluent interface
      */
     public function data(string $data): Image
     {
@@ -233,8 +245,8 @@ class Image
     /**
      * (Static method) Create an Image instance from base64 image data.
      *
-     * @param string $base64
-     * @return Image
+     * @param string $base64 Base64 data of the image
+     * @return Image Return Image instance
      */
     public static function fromBase64(string $base64): Image
     {
@@ -244,8 +256,8 @@ class Image
     /**
      * Create an Image instance from base64 image data.
      *
-     * @param string $base64
-     * @return $this
+     * @param string $base64 Base64 data of the image
+     * @return $this Fluent interface
      */
     public function base64(string $base64): Image
     {
@@ -255,8 +267,8 @@ class Image
     /**
      * (Static method) Open image from URL with cURL.
      *
-     * @param string $url
-     * @return Image
+     * @param string $url Url of the image file
+     * @return Image Return Image instance
      */
     public static function fromCurl(string $url): Image
     {
@@ -266,8 +278,8 @@ class Image
     /**
      * Open image from URL with cURL.
      *
-     * @param string $url
-     * @return $this
+     * @param string $url Url of the image file
+     * @return $this Fluent interface
      */
     public function curl(string $url): Image
     {
@@ -290,7 +302,7 @@ class Image
     /**
      * Destroy image
      *
-     * @return $this
+     * @return $this Fluent interface
      */
     public function destroy(): Image
     {
@@ -304,7 +316,7 @@ class Image
     /**
      * Reset private fields
      *
-     * @return $this
+     * @return $this Fluent interface
      */
     private function resetFields(): Image
     {
@@ -323,11 +335,11 @@ class Image
     //===============================================================================================================================
 
     /**
-     * Convert X position from `Image::ALIGN_...` to int position.
+     * Convert horizontal `Image::ALIGN_...` to int position.
      *
-     * @param int|string $posX
-     * @param int $width
-     * @return int
+     * @param int|string $posX Pixel position or `Image::ALIGN_...` constant
+     * @param int $width Width of the element to align
+     * @return int Horizontal pixel position
      */
     private function convertPosX($posX, int $width = 0): int
     {
@@ -343,11 +355,11 @@ class Image
     }
 
     /**
-     * Convert Y position from `Image::ALIGN_...` to int position.
+     * Convert vertical `Image::ALIGN_...` to int position.
      *
-     * @param int|string $posY
-     * @param int $height
-     * @return int
+     * @param int|string $posY Pixel position or `Image::ALIGN_...` constant
+     * @param int $height Height of the element to align
+     * @return int Vertical pixel position
      */
     private function convertPosY($posY, int $height = 0): int
     {
@@ -368,10 +380,10 @@ class Image
 
 
     /**
-     * Rotate the image
+     * Rotate counterclockwise the image
      *
-     * @param int $angle
-     * @return $this
+     * @param int $angle Angle in degrees
+     * @return $this Fluent interface
      */
     public function rotate(int $angle): Image
     {
@@ -390,9 +402,9 @@ class Image
     /**
      * Resize the image keeping the proportions.
      *
-     * @param int $width
-     * @param int $height
-     * @return $this
+     * @param int $width Max width
+     * @param int $height Max height
+     * @return $this Fluent interface
      */
     public function resizeProportion(int $width, int $height): Image
     {
@@ -410,9 +422,9 @@ class Image
     /**
      * Downscale the image keeping the proportions.
      *
-     * @param int $maxWidth
-     * @param int $maxHeight
-     * @return $this
+     * @param int $maxWidth Max width
+     * @param int $maxHeight Max height
+     * @return $this Fluent interface
      */
     public function downscaleProportion(int $maxWidth, int $maxHeight): Image
     {
@@ -440,9 +452,9 @@ class Image
     /**
      * Resize the image.
      *
-     * @param int $width
-     * @param int $height
-     * @return $this
+     * @param int $width Target width
+     * @param int $height Target height
+     * @return $this Fluent interface
      */
     public function resize(int $width, int $height): Image
     {
@@ -467,15 +479,15 @@ class Image
 
     /**
      * Downscale the image keeping the proportions then crop to fit to $width and $height params.
-     * Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
+     * Use $posX and $posY to select the cropping zone (You can use `Image::ALIGN_...`).
      *
-     * @param int $width
-     * @param int $height
-     * @param int|string $anchorX
-     * @param int|string $anchorY
-     * @return $this
+     * @param int $width Max width
+     * @param int $height Max height
+     * @param int|string $posX Left crop position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top crop position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @return $this Fluent interface
      */
-    public function downscaleAndCrop(int $width, int $height, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE): Image
+    public function downscaleAndCrop(int $width, int $height, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_MIDDLE): Image
     {
         if ($this->width < $width) {
             $width = $this->width;
@@ -494,7 +506,7 @@ class Image
         }
 
         if ($this->downscaleProportion($finalWidth, $finalHeight)) {
-            $this->crop($width, $height, $anchorX, $anchorY);
+            $this->crop($width, $height, $posX, $posY);
         }
 
         return $this;
@@ -502,15 +514,15 @@ class Image
 
     /**
      * Crop to fit to $width and $height params.
-     * Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
+     * Use $posX and $posY to select the cropping zone (You can use `Image::ALIGN_...`).
      *
-     * @param int $width
-     * @param int $height
-     * @param int|string $anchorX
-     * @param int|string $anchorY
-     * @return $this
+     * @param int $width Target width
+     * @param int $height Target height
+     * @param int|string $posX Left crop position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top crop position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @return $this Fluent interface
      */
-    public function crop(int $width, int $height, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE): Image
+    public function crop(int $width, int $height, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_MIDDLE): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -525,25 +537,25 @@ class Image
 
         //==============================================
 
-        $anchorX = $this->convertPosX($anchorX, $width);
-        $anchorY = $this->convertPosY($anchorY, $height);
+        $posX = $this->convertPosX($posX, $width);
+        $posY = $this->convertPosY($posY, $height);
 
         //==============================================
 
-        if ($anchorX < 0) {
-            $anchorX = 0;
+        if ($posX < 0) {
+            $posX = 0;
         }
 
-        if ($anchorX + $width > $this->width) {
-            $anchorX = $this->width - $width;
+        if ($posX + $width > $this->width) {
+            $posX = $this->width - $width;
         }
 
-        if ($anchorY < 0) {
-            $anchorY = 0;
+        if ($posY < 0) {
+            $posY = 0;
         }
 
-        if ($anchorY + $height > $this->height) {
-            $anchorY = $this->height - $height;
+        if ($posY + $height > $this->height) {
+            $posY = $this->height - $height;
         }
 
         //==============================================
@@ -554,7 +566,7 @@ class Image
             \imagesavealpha($image, true) !== false &&
             ($transparent = $this->colorAllocate('#000000FF')) !== false &&
             \imagefill($image, 0, 0, $transparent) !== false &&
-            \imagecopyresampled($image, $this->image, 0, 0, $anchorX, $anchorY, $width, $height, $width, $height) !== false
+            \imagecopyresampled($image, $this->image, 0, 0, $posX, $posY, $width, $height, $width, $height) !== false
         ) {
             $this->image = $image;
             $this->width = $width;
@@ -571,8 +583,8 @@ class Image
     /**
      * Format the string color.
      *
-     * @param string $stringColor
-     * @return string
+     * @param string $stringColor Hexadecimal string color
+     * @return string Formatted hexadecimal string color
      */
     private static function formatColor(string $stringColor): string
     {
@@ -598,8 +610,8 @@ class Image
     /**
      * Allocate a new color to the image.
      *
-     * @param string $color
-     * @return int
+     * @param string $color Hexadecimal string color
+     * @return int Color id
      */
     private function colorAllocate(string $color): int
     {
@@ -625,10 +637,10 @@ class Image
     /**
      * Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
      *
-     * @param Image $image
-     * @param int|string $posX
-     * @param int|string $posY
-     * @return $this
+     * @param Image $image Image instance to be paste on
+     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @return $this Fluent interface
      */
     public function pasteOn(Image $image, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_CENTER): Image
     {
@@ -651,8 +663,8 @@ class Image
     /**
      * Use a grayscale image (`$mask`) to apply transparency to the image.
      *
-     * @param Image $mask
-     * @return $this
+     * @param Image $mask Image instance of the grayscale alpha mask
+     * @return $this Fluent interface
      */
     public function alphaMask(Image $mask): Image
     {
@@ -706,7 +718,7 @@ class Image
     /**
      * Apply a grayscale filter on the image.
      *
-     * @return $this
+     * @return $this Fluent interface
      */
     public function grayscale(): Image
     {
@@ -721,16 +733,16 @@ class Image
     /**
      * Write text on the image.
      *
-     * @param string $string
-     * @param string $fontPath
-     * @param int $fontSize
-     * @param string $color
-     * @param int|string $posX
-     * @param int|string $posY
-     * @param string $anchorX
-     * @param string $anchorY
-     * @param int $rotation
-     * @return $this
+     * @param string $string Text to be added on the image
+     * @param string $fontPath Path to the TTF file
+     * @param int $fontSize Font size
+     * @param string $color Hexadecimal string color
+     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param int|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param int $rotation Counterclockwise text rotation in degrees
+     * @return $this Fluent interface
      */
     public function writeText(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0): Image
     {
@@ -741,16 +753,16 @@ class Image
     /**
      * Write text on the image and get the bounding box of the text in the image.
      *
-     * @param string $string
-     * @param string $fontPath
-     * @param int $fontSize
-     * @param string $color
-     * @param int|string $posX
-     * @param int|string $posY
-     * @param string $anchorX
-     * @param string $anchorY
-     * @param int $rotation
-     * @return array
+     * @param string $string Text to be added on the image
+     * @param string $fontPath Path to the TTF file
+     * @param int $fontSize Font size
+     * @param string $color Hexadecimal string color
+     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param int|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param int $rotation Counterclockwise text rotation in degrees
+     * @return array Pixels positions of the
      */
     public function writeTextAndGetBoundingBox(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0): array
     {
@@ -866,12 +878,12 @@ class Image
     /**
      * Draw a rectangle.
      *
-     * @param int $left
-     * @param int $top
-     * @param int $right
-     * @param int $bottom
-     * @param string $color
-     * @return $this
+     * @param int $left Left position in pixel
+     * @param int $top Top position in pixel
+     * @param int $right Right position in pixel
+     * @param int $bottom Bottom position in pixel
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
      */
     public function drawRectangle(int $left, int $top, int $right, int $bottom, string $color): Image
     {
@@ -895,13 +907,13 @@ class Image
     /**
      * Draw a Line from `$originX, $originY` to `$dstX, $dstY`.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $dstX
-     * @param int $dstY
-     * @param int $weight
-     * @param string $color
-     * @return $this
+     * @param int $originX Horizontal start position in pixel
+     * @param int $originY Vertical start position in pixel
+     * @param int $dstX Horizontal destination in pixel
+     * @param int $dstY Vertical destination in pixel
+     * @param int $weight Line weight in pixel
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
      */
     public function drawLine(int $originX, int $originY, int $dstX, int $dstY, int $weight, string $color = '#000000'): Image
     {
@@ -916,13 +928,13 @@ class Image
     /**
      * Draw a line using angle and length.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $angle
-     * @param int $length
-     * @param int $weight
-     * @param string $color
-     * @return $this
+     * @param int $originX Horizontal start position in pixel
+     * @param int $originY Vertical start position in pixel
+     * @param int $angle Counterclockwise angle in degrees
+     * @param int $length Line length in pixel
+     * @param int $weight Line weight in pixel
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
      */
     public function drawLineWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = '#000000'): Image
     {
@@ -955,13 +967,13 @@ class Image
     /**
      * Draw an arrow with angle and length.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $angle
-     * @param int $length
-     * @param int $weight
-     * @param string $color
-     * @return $this
+     * @param int $originX Horizontal start position in pixel
+     * @param int $originY Vertical start position in pixel
+     * @param int $angle Counterclockwise angle in degrees
+     * @param int $length Line length in pixel
+     * @param int $weight Line weight in pixel
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
      */
     public function drawArrowWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = '#000000'): Image
     {
@@ -979,13 +991,13 @@ class Image
     /**
      * Draw and arrow from `$originX, $originY` to `$dstX, $dstY`.
      *
-     * @param int $originX
-     * @param int $originY
-     * @param int $dstX
-     * @param int $dstY
-     * @param int $weight
-     * @param string $color
-     * @return $this
+     * @param int $originX Horizontal start position in pixel
+     * @param int $originY Vertical start position in pixel
+     * @param int $dstX Horizontal destination in pixel
+     * @param int $dstY Vertical destination in pixel
+     * @param int $weight Line weight in pixel
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
      */
     public function drawArrow(int $originX, int $originY, int $dstX, int $dstY, int $weight, string $color = '#000000'): Image
     {
@@ -1000,13 +1012,13 @@ class Image
     /**
      * Draw a circle.
      *
-     * @param int $posX
-     * @param int $posY
-     * @param int $diameter
-     * @param string $color
-     * @param string $anchorX
-     * @param string $anchorY
-     * @return $this
+     * @param int $posX Left position of the circle in pixel
+     * @param int $posY Top position of the circle in pixel
+     * @param int $diameter Circle diameter in pixel
+     * @param string $color Hexadecimal string color
+     * @param string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @return $this Fluent interface
      */
     public function drawCircle(int $posX, int $posY, int $diameter, string $color = '#FFFFFF', string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE): Image
     {
@@ -1053,8 +1065,8 @@ class Image
     /**
      * Save the image to PNG file.
      *
-     * @param string $path
-     * @return bool
+     * @param string $path Path to the PNG image file
+     * @return bool return true if success
      */
     public function savePNG(string $path): bool
     {
@@ -1067,9 +1079,9 @@ class Image
     /**
      * Save the image to JPG file.
      *
-     * @param string $path
-     * @param int $quality
-     * @return bool
+     * @param string $path Path to the JPG image file
+     * @param int $quality JPG quality : 0 to 100
+     * @return bool return true if success
      */
     public function saveJPG(string $path, int $quality = -1): bool
     {
@@ -1082,8 +1094,8 @@ class Image
     /**
      * Save the image to GIF file.
      *
-     * @param string $path
-     * @return bool
+     * @param string $path Path to the GIF image file
+     * @return bool return true if success
      */
     public function saveGIF(string $path): bool
     {
@@ -1106,7 +1118,7 @@ class Image
     /**
      * Display in JPG format.
      *
-     * @param int $quality
+     * @param int $quality JPG quality : 0 to 100
      */
     public function displayJPG(int $quality = -1)
     {
@@ -1128,9 +1140,9 @@ class Image
     /**
      * Get image raw data
      *
-     * @param string $nameFunction
-     * @param int $quality
-     * @return string
+     * @param string $nameFunction Image function to be called
+     * @param int $quality JPG quality : 0 to 100
+     * @return string Data
      */
     private function getData(string $nameFunction, int $quality = -1): string
     {
@@ -1149,7 +1161,7 @@ class Image
     /**
      * Get image PNG raw data
      *
-     * @return string
+     * @return string Data
      */
     public function getDataPNG(): string
     {
@@ -1159,8 +1171,8 @@ class Image
     /**
      * Get image JPG raw data
      *
-     * @param int $quality
-     * @return string
+     * @param int $quality JPG quality : 0 to 100
+     * @return string Data
      */
     public function getDataJPG(int $quality = -1): string
     {
@@ -1170,7 +1182,7 @@ class Image
     /**
      * Get image GIF raw data
      *
-     * @return string
+     * @return string Data
      */
     public function getDataGIF(): string
     {
@@ -1180,7 +1192,7 @@ class Image
     /**
      * Get image PNG base64 data
      *
-     * @return string
+     * @return string Data
      */
     public function getBase64PNG(): string
     {
@@ -1190,8 +1202,8 @@ class Image
     /**
      * Get image JPG base64 data
      *
-     * @param int $quality
-     * @return string
+     * @param int $quality JPG quality : 0 to 100
+     * @return string Data
      */
     public function getBase64JPG(int $quality = -1): string
     {
@@ -1201,7 +1213,7 @@ class Image
     /**
      * Get image GIF base64 data
      *
-     * @return string
+     * @return string Data
      */
     public function getBase64GIF(): string
     {
@@ -1211,7 +1223,7 @@ class Image
     /**
      * Get image PNG base64 data for <img src=""> tag.
      *
-     * @return string
+     * @return string Data
      */
     public function getBase64SourcePNG(): string
     {
@@ -1221,8 +1233,8 @@ class Image
     /**
      * Get image JPG base64 data for <img src=""> tag.
      *
-     * @param int $quality
-     * @return string
+     * @param int $quality JPG quality : 0 to 100
+     * @return string Data
      */
     public function getBase64SourceJPG(int $quality = -1): string
     {
@@ -1232,7 +1244,7 @@ class Image
     /**
      * Get image GIF base64 data for <img src=""> tag.
      *
-     * @return string
+     * @return string Data
      */
     public function getBase64SourceGIF(): string
     {

@@ -1,7 +1,3 @@
----
-title: \DantSu\PHPImageEditor\Image
-footer: false
----
 
 # Image
 
@@ -13,7 +9,7 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 
 **See Also:**
 
-* https://github.com/DantSu/php-image-editor - 
+* https://github.com/DantSu/php-image-editor - Github page of this project
 
 
 
@@ -30,64 +26,61 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 
 ## Methods
 
--  [getWidth](#getwidth)
--  [getHeight](#getheight)
--  [getType](#gettype)
--  [getImage](#getimage)
--  [isImageDefined](#isimagedefined)
-- *static*  [create](#create)
--  [createNew](#createnew)
-- *static*  [fromPath](#frompath)
--  [path](#path)
-- *static*  [fromForm](#fromform)
--  [form](#form)
-- *static*  [fromData](#fromdata)
--  [data](#data)
-- *static*  [fromBase64](#frombase64)
--  [base64](#base64)
-- *static*  [fromCurl](#fromcurl)
--  [curl](#curl)
--  [destroy](#destroy)
--  [rotate](#rotate)
--  [resizeProportion](#resizeproportion)
--  [downscaleProportion](#downscaleproportion)
--  [resize](#resize)
--  [downscaleAndCrop](#downscaleandcrop)
--  [crop](#crop)
--  [pasteOn](#pasteon)
--  [alphaMask](#alphamask)
--  [grayscale](#grayscale)
--  [writeText](#writetext)
--  [writeTextAndGetBoundingBox](#writetextandgetboundingbox)
--  [drawRectangle](#drawrectangle)
--  [drawLine](#drawline)
--  [drawLineWithAngle](#drawlinewithangle)
--  [drawArrowWithAngle](#drawarrowwithangle)
--  [drawArrow](#drawarrow)
--  [drawCircle](#drawcircle)
--  [savePNG](#savepng)
--  [saveJPG](#savejpg)
--  [saveGIF](#savegif)
--  [displayPNG](#displaypng)
--  [displayJPG](#displayjpg)
--  [displayGIF](#displaygif)
--  [getDataPNG](#getdatapng)
--  [getDataJPG](#getdatajpg)
--  [getDataGIF](#getdatagif)
--  [getBase64PNG](#getbase64png)
--  [getBase64JPG](#getbase64jpg)
--  [getBase64GIF](#getbase64gif)
--  [getBase64SourcePNG](#getbase64sourcepng)
--  [getBase64SourceJPG](#getbase64sourcejpg)
--  [getBase64SourceGIF](#getbase64sourcegif)
+-  [getWidth](#--getwidth)
+-  [getHeight](#--getheight)
+-  [getType](#--gettype)
+-  [getImage](#--getimage)
+-  [isImageDefined](#--isimagedefined)
+- *static*  [fromScratch](#--fromscratch)
+-  [create](#--create)
+- *static*  [fromPath](#--frompath)
+-  [path](#--path)
+- *static*  [fromForm](#--fromform)
+-  [form](#--form)
+- *static*  [fromData](#--fromdata)
+-  [data](#--data)
+- *static*  [fromBase64](#--frombase64)
+-  [base64](#--base64)
+- *static*  [fromCurl](#--fromcurl)
+-  [curl](#--curl)
+-  [destroy](#--destroy)
+-  [rotate](#--rotate)
+-  [resizeProportion](#--resizeproportion)
+-  [downscaleProportion](#--downscaleproportion)
+-  [resize](#--resize)
+-  [downscaleAndCrop](#--downscaleandcrop)
+-  [crop](#--crop)
+-  [pasteOn](#--pasteon)
+-  [alphaMask](#--alphamask)
+-  [grayscale](#--grayscale)
+-  [writeText](#--writetext)
+-  [writeTextAndGetBoundingBox](#--writetextandgetboundingbox)
+-  [drawRectangle](#--drawrectangle)
+-  [drawLine](#--drawline)
+-  [drawLineWithAngle](#--drawlinewithangle)
+-  [drawArrowWithAngle](#--drawarrowwithangle)
+-  [drawArrow](#--drawarrow)
+-  [drawCircle](#--drawcircle)
+-  [savePNG](#--savepng)
+-  [saveJPG](#--savejpg)
+-  [saveGIF](#--savegif)
+-  [displayPNG](#--displaypng)
+-  [displayJPG](#--displayjpg)
+-  [displayGIF](#--displaygif)
+-  [getDataPNG](#--getdatapng)
+-  [getDataJPG](#--getdatajpg)
+-  [getDataGIF](#--getdatagif)
+-  [getBase64PNG](#--getbase64png)
+-  [getBase64JPG](#--getbase64jpg)
+-  [getBase64GIF](#--getbase64gif)
+-  [getBase64SourcePNG](#--getbase64sourcepng)
+-  [getBase64SourceJPG](#--getbase64sourcejpg)
+-  [getBase64SourceGIF](#--getbase64sourcegif)
 
-### getWidth
+### ->getWidth
 
 Return the image width
 
-```php
-public Image::getWidth(): int
-```
 
 
 
@@ -96,21 +89,17 @@ public Image::getWidth(): int
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **int** : Image width
 
 
 
 ---
-### getHeight
+### ->getHeight
 
 Return the image height
 
-```php
-public Image::getHeight(): int
-```
 
 
 
@@ -119,22 +108,18 @@ public Image::getHeight(): int
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **int** : Image height
 
 
 
 ---
-### getType
+### ->getType
 
 Return the image type
 Image type : 1 GIF; 2 JPG; 3 PNG
 
-```php
-public Image::getType(): int
-```
 
 
 
@@ -143,21 +128,17 @@ public Image::getType(): int
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **int** : Image type
 
 
 
 ---
-### getImage
+### ->getImage
 
 Return image resource
 
-```php
-public Image::getImage(): resource|\GdImage
-```
 
 
 
@@ -166,21 +147,17 @@ public Image::getImage(): resource|\GdImage
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **resource|\GdImage** : Image resource
 
 
 
 ---
-### isImageDefined
+### ->isImageDefined
 
 Return true if image is initialized
 
-```php
-public Image::isImageDefined(): bool
-```
 
 
 
@@ -189,22 +166,17 @@ public Image::isImageDefined(): bool
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **bool** : Is image initialized
 
 
 
 ---
-### create
+### ::fromScratch
 
 (Static method) Create a new image with transparent background
 
-```php
-public static Image::create(int $width, int $height): \DantSu\PHPImageEditor\Image
-```
-
 
 
 * This method is **static**.
@@ -212,28 +184,25 @@ public static Image::create(int $width, int $height): \DantSu\PHPImageEditor\Ima
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
+| `width` | **int** | Pixel width of the image |
+| `height` | **int** | Pixel height of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### createNew
+### ->create
 
 Create a new image with transparent background
 
-```php
-public Image::createNew(int $width, int $height): $this
-```
 
 
 
@@ -241,30 +210,25 @@ public Image::createNew(int $width, int $height): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
+| `width` | **int** | Pixel width of the image |
+| `height` | **int** | Pixel height of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### fromPath
+### ::fromPath
 
 (Static method) Open image from local path or URL.
 
-```php
-public static Image::fromPath(string $path): \DantSu\PHPImageEditor\Image
-```
-
 
 
 * This method is **static**.
@@ -272,27 +236,24 @@ public static Image::fromPath(string $path): \DantSu\PHPImageEditor\Image
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `path` | **string** |  |
+| `path` | **string** | Path to the image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### path
+### ->path
 
 Open image from local path or URL.
 
-```php
-public Image::path(string $path): $this
-```
 
 
 
@@ -300,29 +261,24 @@ public Image::path(string $path): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `path` | **string** |  |
+| `path` | **string** | Path to the image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### fromForm
+### ::fromForm
 
 (Static method) Open an uploaded image from html form (using $file["tmp_name"]).
 
-```php
-public static Image::fromForm(array $file): \DantSu\PHPImageEditor\Image
-```
-
 
 
 * This method is **static**.
@@ -330,27 +286,24 @@ public static Image::fromForm(array $file): \DantSu\PHPImageEditor\Image
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `file` | **array** |  |
+| `file` | **array** | File array from html form |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### form
+### ->form
 
 Open an uploaded image from html form (using $file["tmp_name"]).
 
-```php
-public Image::form(array $file): $this
-```
 
 
 
@@ -358,29 +311,24 @@ public Image::form(array $file): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `file` | **array** |  |
+| `file` | **array** | File array from html form |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### fromData
+### ::fromData
 
 (Static method) Create an Image instance from image raw data.
 
-```php
-public static Image::fromData(string $data): \DantSu\PHPImageEditor\Image
-```
-
 
 
 * This method is **static**.
@@ -388,27 +336,24 @@ public static Image::fromData(string $data): \DantSu\PHPImageEditor\Image
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `data` | **string** |  |
+| `data` | **string** | Raw data of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### data
+### ->data
 
 Create an Image instance from image raw data.
 
-```php
-public Image::data(string $data): $this
-```
 
 
 
@@ -416,29 +361,24 @@ public Image::data(string $data): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `data` | **string** |  |
+| `data` | **string** | Raw data of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### fromBase64
+### ::fromBase64
 
 (Static method) Create an Image instance from base64 image data.
 
-```php
-public static Image::fromBase64(string $base64): \DantSu\PHPImageEditor\Image
-```
-
 
 
 * This method is **static**.
@@ -446,27 +386,24 @@ public static Image::fromBase64(string $base64): \DantSu\PHPImageEditor\Image
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `base64` | **string** |  |
+| `base64` | **string** | Base64 data of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### base64
+### ->base64
 
 Create an Image instance from base64 image data.
 
-```php
-public Image::base64(string $base64): $this
-```
 
 
 
@@ -474,28 +411,23 @@ public Image::base64(string $base64): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `base64` | **string** |  |
+| `base64` | **string** | Base64 data of the image |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### fromCurl
+### ::fromCurl
 
 (Static method) Open image from URL with cURL.
-
-```php
-public static Image::fromCurl(string $url): \DantSu\PHPImageEditor\Image
-```
 
 
 
@@ -504,27 +436,24 @@ public static Image::fromCurl(string $url): \DantSu\PHPImageEditor\Image
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `url` | **string** |  |
+| `url` | **string** | Url of the image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **\DantSu\PHPImageEditor\Image** : Return Image instance
 
 
 
 ---
-### curl
+### ->curl
 
 Open image from URL with cURL.
 
-```php
-public Image::curl(string $url): $this
-```
 
 
 
@@ -532,28 +461,24 @@ public Image::curl(string $url): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `url` | **string** |  |
+| `url` | **string** | Url of the image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### destroy
+### ->destroy
 
 Destroy image
 
-```php
-public Image::destroy(): $this
-```
 
 
 
@@ -562,21 +487,16 @@ public Image::destroy(): $this
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **$this** : Fluent interface
 
 
 
 ---
-### rotate
+### ->rotate
 
-Rotate the image
-
-```php
-public Image::rotate(int $angle): $this
-```
+Rotate counterclockwise the image
 
 
 
@@ -585,27 +505,24 @@ public Image::rotate(int $angle): $this
 
 
 
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `angle` | **int** |  |
+| `angle` | **int** | Angle in degrees |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### resizeProportion
+### ->resizeProportion
 
 Resize the image keeping the proportions.
 
-```php
-public Image::resizeProportion(int $width, int $height): $this
-```
 
 
 
@@ -613,29 +530,25 @@ public Image::resizeProportion(int $width, int $height): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
+| `width` | **int** | Max width |
+| `height` | **int** | Max height |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### downscaleProportion
+### ->downscaleProportion
 
 Downscale the image keeping the proportions.
 
-```php
-public Image::downscaleProportion(int $maxWidth, int $maxHeight): $this
-```
 
 
 
@@ -643,29 +556,25 @@ public Image::downscaleProportion(int $maxWidth, int $maxHeight): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `maxWidth` | **int** |  |
-| `maxHeight` | **int** |  |
+| `maxWidth` | **int** | Max width |
+| `maxHeight` | **int** | Max height |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### resize
+### ->resize
 
 Resize the image.
 
-```php
-public Image::resize(int $width, int $height): $this
-```
 
 
 
@@ -673,93 +582,81 @@ public Image::resize(int $width, int $height): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
+| `width` | **int** | Target width |
+| `height` | **int** | Target height |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### downscaleAndCrop
+### ->downscaleAndCrop
 
 Downscale the image keeping the proportions then crop to fit to $width and $height params.
 
-```php
-public Image::downscaleAndCrop(int $width, int $height, int|string $anchorX = Image::ALIGN_CENTER, int|string $anchorY = Image::ALIGN_MIDDLE): $this
-```
-
-Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
 
 
 
 
 
 
-**Parameters:**
+
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
-| `anchorX` | **int|string** |  |
-| `anchorY` | **int|string** |  |
+| `width` | **int** | Max width |
+| `height` | **int** | Max height |
+| `posX` | **int&#124;string** | Left crop position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top crop position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### crop
+### ->crop
 
 Crop to fit to $width and $height params.
 
-```php
-public Image::crop(int $width, int $height, int|string $anchorX = Image::ALIGN_CENTER, int|string $anchorY = Image::ALIGN_MIDDLE): $this
-```
-
-Use $anchorX and $anchorY to select the cropping zone (You can use `Image::ALIGN_...`).
 
 
 
 
 
 
-**Parameters:**
+
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `width` | **int** |  |
-| `height` | **int** |  |
-| `anchorX` | **int|string** |  |
-| `anchorY` | **int|string** |  |
+| `width` | **int** | Target width |
+| `height` | **int** | Target height |
+| `posX` | **int&#124;string** | Left crop position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top crop position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### pasteOn
+### ->pasteOn
 
 Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
 
-```php
-public Image::pasteOn(\DantSu\PHPImageEditor\Image $image, int|string $posX = Image::ALIGN_CENTER, int|string $posY = Image::ALIGN_CENTER): $this
-```
 
 
 
@@ -767,30 +664,26 @@ public Image::pasteOn(\DantSu\PHPImageEditor\Image $image, int|string $posX = Im
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `image` | **\DantSu\PHPImageEditor\Image** |  |
-| `posX` | **int|string** |  |
-| `posY` | **int|string** |  |
+| `image` | **\DantSu\PHPImageEditor\Image** | Image instance to be paste on |
+| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### alphaMask
+### ->alphaMask
 
 Use a grayscale image (`$mask`) to apply transparency to the image.
 
-```php
-public Image::alphaMask(\DantSu\PHPImageEditor\Image $mask): $this
-```
 
 
 
@@ -798,28 +691,24 @@ public Image::alphaMask(\DantSu\PHPImageEditor\Image $mask): $this
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `mask` | **\DantSu\PHPImageEditor\Image** |  |
+| `mask` | **\DantSu\PHPImageEditor\Image** | Image instance of the grayscale alpha mask |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### grayscale
+### ->grayscale
 
 Apply a grayscale filter on the image.
 
-```php
-public Image::grayscale(): $this
-```
 
 
 
@@ -828,21 +717,17 @@ public Image::grayscale(): $this
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **$this** : Fluent interface
 
 
 
 ---
-### writeText
+### ->writeText
 
 Write text on the image.
 
-```php
-public Image::writeText(string $string, string $fontPath, int $fontSize, string $color = &#039;#ffffff&#039;, int|string $posX, int|string $posY, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation): $this
-```
 
 
 
@@ -850,36 +735,32 @@ public Image::writeText(string $string, string $fontPath, int $fontSize, string 
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **string** |  |
-| `fontPath` | **string** |  |
-| `fontSize` | **int** |  |
-| `color` | **string** |  |
-| `posX` | **int|string** |  |
-| `posY` | **int|string** |  |
-| `anchorX` | **string** |  |
-| `anchorY` | **string** |  |
-| `rotation` | **int** |  |
+| `string` | **string** | Text to be added on the image |
+| `fontPath` | **string** | Path to the TTF file |
+| `fontSize` | **int** | Font size |
+| `color` | **string** | Hexadecimal string color |
+| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `anchorX` | **int&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `anchorY` | **int&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `rotation` | **int** | Counterclockwise text rotation in degrees |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### writeTextAndGetBoundingBox
+### ->writeTextAndGetBoundingBox
 
 Write text on the image and get the bounding box of the text in the image.
 
-```php
-public Image::writeTextAndGetBoundingBox(string $string, string $fontPath, int $fontSize, string $color = &#039;#ffffff&#039;, int|string $posX, int|string $posY, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation): array
-```
 
 
 
@@ -887,36 +768,32 @@ public Image::writeTextAndGetBoundingBox(string $string, string $fontPath, int $
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `string` | **string** |  |
-| `fontPath` | **string** |  |
-| `fontSize` | **int** |  |
-| `color` | **string** |  |
-| `posX` | **int|string** |  |
-| `posY` | **int|string** |  |
-| `anchorX` | **string** |  |
-| `anchorY` | **string** |  |
-| `rotation` | **int** |  |
+| `string` | **string** | Text to be added on the image |
+| `fontPath` | **string** | Path to the TTF file |
+| `fontSize` | **int** | Font size |
+| `color` | **string** | Hexadecimal string color |
+| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `anchorX` | **int&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `anchorY` | **int&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `rotation` | **int** | Counterclockwise text rotation in degrees |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **array** : Pixels positions of the
 
 
 
 ---
-### drawRectangle
+### ->drawRectangle
 
 Draw a rectangle.
 
-```php
-public Image::drawRectangle(int $left, int $top, int $right, int $bottom, string $color): $this
-```
 
 
 
@@ -924,32 +801,28 @@ public Image::drawRectangle(int $left, int $top, int $right, int $bottom, string
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `left` | **int** |  |
-| `top` | **int** |  |
-| `right` | **int** |  |
-| `bottom` | **int** |  |
-| `color` | **string** |  |
+| `left` | **int** | Left position in pixel |
+| `top` | **int** | Top position in pixel |
+| `right` | **int** | Right position in pixel |
+| `bottom` | **int** | Bottom position in pixel |
+| `color` | **string** | Hexadecimal string color |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### drawLine
+### ->drawLine
 
 Draw a Line from `$originX, $originY` to `$dstX, $dstY`.
 
-```php
-public Image::drawLine(int $originX, int $originY, int $dstX, int $dstY, int $weight, string $color = &#039;#000000&#039;): $this
-```
 
 
 
@@ -957,33 +830,29 @@ public Image::drawLine(int $originX, int $originY, int $dstX, int $dstY, int $we
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `originX` | **int** |  |
-| `originY` | **int** |  |
-| `dstX` | **int** |  |
-| `dstY` | **int** |  |
-| `weight` | **int** |  |
-| `color` | **string** |  |
+| `originX` | **int** | Horizontal start position in pixel |
+| `originY` | **int** | Vertical start position in pixel |
+| `dstX` | **int** | Horizontal destination in pixel |
+| `dstY` | **int** | Vertical destination in pixel |
+| `weight` | **int** | Line weight in pixel |
+| `color` | **string** | Hexadecimal string color |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### drawLineWithAngle
+### ->drawLineWithAngle
 
 Draw a line using angle and length.
 
-```php
-public Image::drawLineWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = &#039;#000000&#039;): $this
-```
 
 
 
@@ -991,33 +860,29 @@ public Image::drawLineWithAngle(int $originX, int $originY, int $angle, int $len
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `originX` | **int** |  |
-| `originY` | **int** |  |
-| `angle` | **int** |  |
-| `length` | **int** |  |
-| `weight` | **int** |  |
-| `color` | **string** |  |
+| `originX` | **int** | Horizontal start position in pixel |
+| `originY` | **int** | Vertical start position in pixel |
+| `angle` | **int** | Counterclockwise angle in degrees |
+| `length` | **int** | Line length in pixel |
+| `weight` | **int** | Line weight in pixel |
+| `color` | **string** | Hexadecimal string color |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### drawArrowWithAngle
+### ->drawArrowWithAngle
 
 Draw an arrow with angle and length.
 
-```php
-public Image::drawArrowWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = &#039;#000000&#039;): $this
-```
 
 
 
@@ -1025,33 +890,29 @@ public Image::drawArrowWithAngle(int $originX, int $originY, int $angle, int $le
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `originX` | **int** |  |
-| `originY` | **int** |  |
-| `angle` | **int** |  |
-| `length` | **int** |  |
-| `weight` | **int** |  |
-| `color` | **string** |  |
+| `originX` | **int** | Horizontal start position in pixel |
+| `originY` | **int** | Vertical start position in pixel |
+| `angle` | **int** | Counterclockwise angle in degrees |
+| `length` | **int** | Line length in pixel |
+| `weight` | **int** | Line weight in pixel |
+| `color` | **string** | Hexadecimal string color |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### drawArrow
+### ->drawArrow
 
 Draw and arrow from `$originX, $originY` to `$dstX, $dstY`.
 
-```php
-public Image::drawArrow(int $originX, int $originY, int $dstX, int $dstY, int $weight, string $color = &#039;#000000&#039;): $this
-```
 
 
 
@@ -1059,33 +920,29 @@ public Image::drawArrow(int $originX, int $originY, int $dstX, int $dstY, int $w
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `originX` | **int** |  |
-| `originY` | **int** |  |
-| `dstX` | **int** |  |
-| `dstY` | **int** |  |
-| `weight` | **int** |  |
-| `color` | **string** |  |
+| `originX` | **int** | Horizontal start position in pixel |
+| `originY` | **int** | Vertical start position in pixel |
+| `dstX` | **int** | Horizontal destination in pixel |
+| `dstY` | **int** | Vertical destination in pixel |
+| `weight` | **int** | Line weight in pixel |
+| `color` | **string** | Hexadecimal string color |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### drawCircle
+### ->drawCircle
 
 Draw a circle.
 
-```php
-public Image::drawCircle(int $posX, int $posY, int $diameter, string $color = &#039;#FFFFFF&#039;, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE): $this
-```
 
 
 
@@ -1093,33 +950,29 @@ public Image::drawCircle(int $posX, int $posY, int $diameter, string $color = &#
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `posX` | **int** |  |
-| `posY` | **int** |  |
-| `diameter` | **int** |  |
-| `color` | **string** |  |
-| `anchorX` | **string** |  |
-| `anchorY` | **string** |  |
+| `posX` | **int** | Left position of the circle in pixel |
+| `posY` | **int** | Top position of the circle in pixel |
+| `diameter` | **int** | Circle diameter in pixel |
+| `color` | **string** | Hexadecimal string color |
+| `anchorX` | **string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `anchorY` | **string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **$this** : Fluent interface
 
 
 
 ---
-### savePNG
+### ->savePNG
 
 Save the image to PNG file.
 
-```php
-public Image::savePNG(string $path): bool
-```
 
 
 
@@ -1127,28 +980,24 @@ public Image::savePNG(string $path): bool
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `path` | **string** |  |
+| `path` | **string** | Path to the PNG image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **bool** : return true if success
 
 
 
 ---
-### saveJPG
+### ->saveJPG
 
 Save the image to JPG file.
 
-```php
-public Image::saveJPG(string $path, int $quality = -1): bool
-```
 
 
 
@@ -1156,29 +1005,25 @@ public Image::saveJPG(string $path, int $quality = -1): bool
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `path` | **string** |  |
-| `quality` | **int** |  |
+| `path` | **string** | Path to the JPG image file |
+| `quality` | **int** | JPG quality : 0 to 100 |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **bool** : return true if success
 
 
 
 ---
-### saveGIF
+### ->saveGIF
 
 Save the image to GIF file.
 
-```php
-public Image::saveGIF(string $path): bool
-```
 
 
 
@@ -1186,28 +1031,24 @@ public Image::saveGIF(string $path): bool
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `path` | **string** |  |
+| `path` | **string** | Path to the GIF image file |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **bool** : return true if success
 
 
 
 ---
-### displayPNG
+### ->displayPNG
 
 Display in PNG format.
 
-```php
-public Image::displayPNG(): mixed
-```
 
 
 
@@ -1216,21 +1057,17 @@ public Image::displayPNG(): mixed
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **mixed** : 
 
 
 
 ---
-### displayJPG
+### ->displayJPG
 
 Display in JPG format.
 
-```php
-public Image::displayJPG(int $quality = -1): mixed
-```
 
 
 
@@ -1238,28 +1075,24 @@ public Image::displayJPG(int $quality = -1): mixed
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `quality` | **int** |  |
+| `quality` | **int** | JPG quality : 0 to 100 |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **mixed** : 
 
 
 
 ---
-### displayGIF
+### ->displayGIF
 
 Display in GIF format.
 
-```php
-public Image::displayGIF(): mixed
-```
 
 
 
@@ -1268,21 +1101,17 @@ public Image::displayGIF(): mixed
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **mixed** : 
 
 
 
 ---
-### getDataPNG
+### ->getDataPNG
 
 Get image PNG raw data
 
-```php
-public Image::getDataPNG(): string
-```
 
 
 
@@ -1291,21 +1120,17 @@ public Image::getDataPNG(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
 ---
-### getDataJPG
+### ->getDataJPG
 
 Get image JPG raw data
 
-```php
-public Image::getDataJPG(int $quality = -1): string
-```
 
 
 
@@ -1313,28 +1138,24 @@ public Image::getDataJPG(int $quality = -1): string
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `quality` | **int** |  |
+| `quality` | **int** | JPG quality : 0 to 100 |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **string** : Data
 
 
 
 ---
-### getDataGIF
+### ->getDataGIF
 
 Get image GIF raw data
 
-```php
-public Image::getDataGIF(): string
-```
 
 
 
@@ -1343,21 +1164,17 @@ public Image::getDataGIF(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
 ---
-### getBase64PNG
+### ->getBase64PNG
 
 Get image PNG base64 data
 
-```php
-public Image::getBase64PNG(): string
-```
 
 
 
@@ -1366,21 +1183,17 @@ public Image::getBase64PNG(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
 ---
-### getBase64JPG
+### ->getBase64JPG
 
 Get image JPG base64 data
 
-```php
-public Image::getBase64JPG(int $quality = -1): string
-```
 
 
 
@@ -1388,28 +1201,24 @@ public Image::getBase64JPG(int $quality = -1): string
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `quality` | **int** |  |
+| `quality` | **int** | JPG quality : 0 to 100 |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **string** : Data
 
 
 
 ---
-### getBase64GIF
+### ->getBase64GIF
 
 Get image GIF base64 data
 
-```php
-public Image::getBase64GIF(): string
-```
 
 
 
@@ -1418,21 +1227,17 @@ public Image::getBase64GIF(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
 ---
-### getBase64SourcePNG
+### ->getBase64SourcePNG
 
 Get image PNG base64 data for <img src=""> tag.
 
-```php
-public Image::getBase64SourcePNG(): string
-```
 
 
 
@@ -1441,21 +1246,17 @@ public Image::getBase64SourcePNG(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
 ---
-### getBase64SourceJPG
+### ->getBase64SourceJPG
 
 Get image JPG base64 data for <img src=""> tag.
 
-```php
-public Image::getBase64SourceJPG(int $quality = -1): string
-```
 
 
 
@@ -1463,28 +1264,24 @@ public Image::getBase64SourceJPG(int $quality = -1): string
 
 
 
-
-**Parameters:**
+#### Parameters:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `quality` | **int** |  |
+| `quality` | **int** | JPG quality : 0 to 100 |
 
 
-**Return Value:**
+#### Return Value:
 
-
+ **string** : Data
 
 
 
 ---
-### getBase64SourceGIF
+### ->getBase64SourceGIF
 
 Get image GIF base64 data for <img src=""> tag.
 
-```php
-public Image::getBase64SourceGIF(): string
-```
 
 
 
@@ -1493,10 +1290,9 @@ public Image::getBase64SourceGIF(): string
 
 
 
+#### Return Value:
 
-**Return Value:**
-
-
+ **string** : Data
 
 
 
@@ -1504,4 +1300,4 @@ public Image::getBase64SourceGIF(): string
 
 
 ---
-> Automatically generated from source code comments on 2021-09-07 using [phpDocumentor](http://www.phpdoc.org/) and [dmarkic/phpdoc3-template-md](https://github.com/dmarkic/phpdoc3-template-md)
+> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)

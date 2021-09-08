@@ -1,7 +1,3 @@
----
-title: PHP Image Editor
-footer: false
----
 
 # PHP Image Editor
 
@@ -23,4 +19,4 @@ This is an automatically generated documentation for **PHP Image Editor**.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-07 using [phpDocumentor](http://www.phpdoc.org/) and [dmarkic/phpdoc3-template-md](https://github.com/dmarkic/phpdoc3-template-md)
+> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)
