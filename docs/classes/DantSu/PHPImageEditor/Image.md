@@ -31,8 +31,8 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 - [getType](#-gettype) 
 - [getImage](#-getimage) 
 - [isImageDefined](#-isimagedefined) 
-- *(static)* [fromScratch](#fromscratch) 
-- [create](#-create) 
+- *(static)* [newCanvas](#newcanvas) 
+- [resetCanvas](#-resetcanvas) 
 - *(static)* [fromPath](#frompath) 
 - [path](#-path) 
 - *(static)* [fromForm](#fromform) 
@@ -173,7 +173,7 @@ Return true if image is initialized
 
 
 ---
-### ::fromScratch
+### ::newCanvas
 
 (Static method) Create a new image with transparent background
 
@@ -199,7 +199,7 @@ Return true if image is initialized
 
 
 ---
-### ->create
+### ->resetCanvas
 
 Create a new image with transparent background
 

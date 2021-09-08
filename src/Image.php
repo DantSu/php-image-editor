@@ -99,9 +99,9 @@ class Image
      * @param int $height Pixel height of the image
      * @return Image Return Image instance
      */
-    public static function fromScratch(int $width, int $height): Image
+    public static function newCanvas(int $width, int $height): Image
     {
-        return (new Image)->create($width, $height);
+        return (new Image)->resetCanvas($width, $height);
     }
 
     /**
@@ -111,7 +111,7 @@ class Image
      * @param int $height Pixel height of the image
      * @return $this Fluent interface
      */
-    public function create(int $width, int $height): Image
+    public function resetCanvas(int $width, int $height): Image
     {
         if (($this->image = \imagecreatetruecolor($width, $height)) === false) {
             $this->resetFields();
