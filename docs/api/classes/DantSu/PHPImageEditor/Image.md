@@ -15,67 +15,67 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 
 ## Constants
 
-| Constant | Type | Value |
-|:---      |:---  |:---   |
-|`\DantSu\PHPImageEditor\Image::ALIGN_LEFT`||&#039;left&#039;|
-|`\DantSu\PHPImageEditor\Image::ALIGN_CENTER`||&#039;center&#039;|
-|`\DantSu\PHPImageEditor\Image::ALIGN_RIGHT`||&#039;right&#039;|
-|`\DantSu\PHPImageEditor\Image::ALIGN_TOP`||&#039;top&#039;|
-|`\DantSu\PHPImageEditor\Image::ALIGN_MIDDLE`||&#039;middle&#039;|
-|`\DantSu\PHPImageEditor\Image::ALIGN_BOTTOM`||&#039;bottom&#039;|
+| Constant | Value |
+|:---      |:---   |
+|`\DantSu\PHPImageEditor\Image::ALIGN_LEFT`|&#039;left&#039;|
+|`\DantSu\PHPImageEditor\Image::ALIGN_CENTER`|&#039;center&#039;|
+|`\DantSu\PHPImageEditor\Image::ALIGN_RIGHT`|&#039;right&#039;|
+|`\DantSu\PHPImageEditor\Image::ALIGN_TOP`|&#039;top&#039;|
+|`\DantSu\PHPImageEditor\Image::ALIGN_MIDDLE`|&#039;middle&#039;|
+|`\DantSu\PHPImageEditor\Image::ALIGN_BOTTOM`|&#039;bottom&#039;|
 
 ## Methods
 
--  [getWidth](#--getwidth)
--  [getHeight](#--getheight)
--  [getType](#--gettype)
--  [getImage](#--getimage)
--  [isImageDefined](#--isimagedefined)
-- *static*  [fromScratch](#--fromscratch)
--  [create](#--create)
-- *static*  [fromPath](#--frompath)
--  [path](#--path)
-- *static*  [fromForm](#--fromform)
--  [form](#--form)
-- *static*  [fromData](#--fromdata)
--  [data](#--data)
-- *static*  [fromBase64](#--frombase64)
--  [base64](#--base64)
-- *static*  [fromCurl](#--fromcurl)
--  [curl](#--curl)
--  [destroy](#--destroy)
--  [rotate](#--rotate)
--  [resizeProportion](#--resizeproportion)
--  [downscaleProportion](#--downscaleproportion)
--  [resize](#--resize)
--  [downscaleAndCrop](#--downscaleandcrop)
--  [crop](#--crop)
--  [pasteOn](#--pasteon)
--  [alphaMask](#--alphamask)
--  [grayscale](#--grayscale)
--  [writeText](#--writetext)
--  [writeTextAndGetBoundingBox](#--writetextandgetboundingbox)
--  [drawRectangle](#--drawrectangle)
--  [drawLine](#--drawline)
--  [drawLineWithAngle](#--drawlinewithangle)
--  [drawArrowWithAngle](#--drawarrowwithangle)
--  [drawArrow](#--drawarrow)
--  [drawCircle](#--drawcircle)
--  [savePNG](#--savepng)
--  [saveJPG](#--savejpg)
--  [saveGIF](#--savegif)
--  [displayPNG](#--displaypng)
--  [displayJPG](#--displayjpg)
--  [displayGIF](#--displaygif)
--  [getDataPNG](#--getdatapng)
--  [getDataJPG](#--getdatajpg)
--  [getDataGIF](#--getdatagif)
--  [getBase64PNG](#--getbase64png)
--  [getBase64JPG](#--getbase64jpg)
--  [getBase64GIF](#--getbase64gif)
--  [getBase64SourcePNG](#--getbase64sourcepng)
--  [getBase64SourceJPG](#--getbase64sourcejpg)
--  [getBase64SourceGIF](#--getbase64sourcegif)
+- [getWidth](#-getwidth) 
+- [getHeight](#-getheight) 
+- [getType](#-gettype) 
+- [getImage](#-getimage) 
+- [isImageDefined](#-isimagedefined) 
+- *(static)* [fromScratch](#fromscratch) 
+- [create](#-create) 
+- *(static)* [fromPath](#frompath) 
+- [path](#-path) 
+- *(static)* [fromForm](#fromform) 
+- [form](#-form) 
+- *(static)* [fromData](#fromdata) 
+- [data](#-data) 
+- *(static)* [fromBase64](#frombase64) 
+- [base64](#-base64) 
+- *(static)* [fromCurl](#fromcurl) 
+- [curl](#-curl) 
+- [destroy](#-destroy) 
+- [rotate](#-rotate) 
+- [resizeProportion](#-resizeproportion) 
+- [downscaleProportion](#-downscaleproportion) 
+- [resize](#-resize) 
+- [downscaleAndCrop](#-downscaleandcrop) 
+- [crop](#-crop) 
+- [pasteOn](#-pasteon) 
+- [alphaMask](#-alphamask) 
+- [grayscale](#-grayscale) 
+- [writeText](#-writetext) 
+- [writeTextAndGetBoundingBox](#-writetextandgetboundingbox) 
+- [drawRectangle](#-drawrectangle) 
+- [drawLine](#-drawline) 
+- [drawLineWithAngle](#-drawlinewithangle) 
+- [drawArrowWithAngle](#-drawarrowwithangle) 
+- [drawArrow](#-drawarrow) 
+- [drawCircle](#-drawcircle) 
+- [savePNG](#-savepng) 
+- [saveJPG](#-savejpg) 
+- [saveGIF](#-savegif) 
+- [displayPNG](#-displaypng) 
+- [displayJPG](#-displayjpg) 
+- [displayGIF](#-displaygif) 
+- [getDataPNG](#-getdatapng) 
+- [getDataJPG](#-getdatajpg) 
+- [getDataGIF](#-getdatagif) 
+- [getBase64PNG](#-getbase64png) 
+- [getBase64JPG](#-getbase64jpg) 
+- [getBase64GIF](#-getbase64gif) 
+- [getBase64SourcePNG](#-getbase64sourcepng) 
+- [getBase64SourceJPG](#-getbase64sourcejpg) 
+- [getBase64SourceGIF](#-getbase64sourcegif) 
 
 ### ->getWidth
 
