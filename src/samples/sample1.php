@@ -7,7 +7,6 @@ use \DantSu\PHPImageEditor\Image;
 
 \header('Content-type: image/png');
 
-
 $image = Image::fromScratch(500, 500)
     ->drawRectangle(0, 0, 500, 500, '#444')
     ->drawRectangle(0, 350, 500, 500, '#FF8800')
