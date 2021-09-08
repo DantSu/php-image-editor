@@ -642,7 +642,7 @@ class Image
      * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
      * @return $this Fluent interface
      */
-    public function pasteOn(Image $image, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_CENTER): Image
+    public function pasteOn(Image $image, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_MIDDLE): Image
     {
         if (!$this->isImageDefined() || !$image->isImageDefined()) {
             return $this;
