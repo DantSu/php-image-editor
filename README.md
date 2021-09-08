@@ -14,7 +14,7 @@ composer require dantsu/php-image-editor
 
 ### Example 1
 
-Create a empty image and draw on it :
+Create a empty image, draw on it and display it :
 
 ```php
 use \DantSu\PHPImageEditor\Image;
@@ -43,7 +43,7 @@ $image
 
 ### Example 2
 
-Apply a watermark on a photo :
+Apply a watermark on a photo and save it :
 
 ```php
 use \DantSu\PHPImageEditor\Image;
@@ -55,7 +55,7 @@ Image::fromPath(__DIR__ . '/resources/photo.jpg')
         Image::ALIGN_RIGHT,
         Image::ALIGN_TOP
     )
-    ->saveJPG(__DIR__ . '/my-image.png', 70);
+    ->saveJPG(__DIR__ . '/my-image.jpg', 70);
 ```
 
 ## Documentation
