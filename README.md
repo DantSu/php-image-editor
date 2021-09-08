@@ -45,6 +45,9 @@ $image
     ->displayPNG();
 ```
 
+![Sample 1](./src/samples/resources/sample1.png)
+
+
 ### Example 2
 
 Apply a watermark on a photo and save it :
@@ -61,6 +64,8 @@ Image::fromPath(__DIR__ . '/resources/photo.jpg')
     )
     ->saveJPG(__DIR__ . '/my-image.jpg', 70);
 ```
+
+![Sample 2](./src/samples/resources/sample2.jpg)
 
 ## Documentation
 
