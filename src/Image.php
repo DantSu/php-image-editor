@@ -955,7 +955,16 @@ class Image
         $points4 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle + 90), floor($weight / 2));
         $points3 = Geometry2D::getDstXY($points4['x'], $points4['y'], $angle, $length);
 
-        $points = [$points1['x'], $points1['y'], $points2['x'], $points2['y'], $points3['x'], $points3['y'], $points4['x'], $points4['y']];
+        $points = [
+            \round($points1['x']),
+            \round($points1['y']),
+            \round($points2['x']),
+            \round($points2['y']),
+            \round($points3['x']),
+            \round($points3['y']),
+            \round($points4['x']),
+            \round($points4['y'])
+        ];
 
         \imageantialias($this->image, true);
         \imagepolygon($this->image, $points, 4, $color);
@@ -981,7 +990,7 @@ class Image
             return $this;
         }
 
-        $headOrigin = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle), \round($length - $weight / 2));
+        $headOrigin = Geometry2D::getDstXYRounded($originX, $originY, Geometry2D::degrees0to360($angle), \round($length - $weight / 2));
         $this->drawLineWithAngle($headOrigin['x'], $headOrigin['y'], Geometry2D::degrees0to360($angle + 150), \round($length / 10), $weight, $color);
         $this->drawLineWithAngle($headOrigin['x'], $headOrigin['y'], Geometry2D::degrees0to360($angle - 150), \round($length / 10), $weight, $color);
         return $this->drawLineWithAngle($originX, $originY, $angle, $length, $weight, $color);
