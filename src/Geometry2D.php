@@ -4,7 +4,7 @@ namespace DantSu\PHPImageEditor;
 
 class Geometry2D
 {
-    public static function degrees0to360($angle)
+    public static function degrees0to360(float $angle): float
     {
         while ($angle < 0 || $angle >= 360) {
             if ($angle < 0) $angle += 360;
@@ -13,7 +13,7 @@ class Geometry2D
         return $angle;
     }
 
-    public static function getDstXY($originX, $originY, $angle, $length)
+    public static function getDstXY(float $originX, float $originY, float $angle, float $length): array
     {
         $angle = 360 - $angle;
         return [
@@ -22,7 +22,7 @@ class Geometry2D
         ];
     }
 
-    public static function getDstXYRounded($originX, $originY, $angle, $length)
+    public static function getDstXYRounded(float $originX, float $originY, float $angle, float $length): array
     {
         $xy = Geometry2D::getDstXY($originX, $originY, $angle, $length);
         return [
@@ -31,7 +31,7 @@ class Geometry2D
         ];
     }
 
-    public static function getAngleAndLengthFromPoints($originX, $originY, $dstX, $dstY)
+    public static function getAngleAndLengthFromPoints(float $originX, float $originY, float $dstX, float $dstY): array
     {
         $width = $dstX - $originX;
         $height = $dstY - $originY;

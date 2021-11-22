@@ -382,10 +382,10 @@ class Image
     /**
      * Rotate counterclockwise the image
      *
-     * @param int $angle Angle in degrees
+     * @param float $angle Angle in degrees
      * @return $this Fluent interface
      */
-    public function rotate(int $angle): Image
+    public function rotate(float $angle): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -930,13 +930,13 @@ class Image
      *
      * @param int $originX Horizontal start position in pixel
      * @param int $originY Vertical start position in pixel
-     * @param int $angle Counterclockwise angle in degrees
-     * @param int $length Line length in pixel
+     * @param float $angle Counterclockwise angle in degrees
+     * @param float $length Line length in pixel
      * @param int $weight Line weight in pixel
      * @param string $color Hexadecimal string color
      * @return $this Fluent interface
      */
-    public function drawLineWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = '#000000'): Image
+    public function drawLineWithAngle(int $originX, int $originY, float $angle, float $length, int $weight, string $color = '#000000'): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -950,9 +950,9 @@ class Image
 
         $angle = Geometry2D::degrees0to360($angle);
 
-        $points1 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle - 90), floor($weight / 2));
+        $points1 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle - 90), \floor($weight / 2));
         $points2 = Geometry2D::getDstXY($points1['x'], $points1['y'], $angle, $length);
-        $points4 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle + 90), floor($weight / 2));
+        $points4 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle + 90), \floor($weight / 2));
         $points3 = Geometry2D::getDstXY($points4['x'], $points4['y'], $angle, $length);
 
         $points = [
@@ -978,13 +978,13 @@ class Image
      *
      * @param int $originX Horizontal start position in pixel
      * @param int $originY Vertical start position in pixel
-     * @param int $angle Counterclockwise angle in degrees
-     * @param int $length Line length in pixel
+     * @param float $angle Counterclockwise angle in degrees
+     * @param float $length Line length in pixel
      * @param int $weight Line weight in pixel
      * @param string $color Hexadecimal string color
      * @return $this Fluent interface
      */
-    public function drawArrowWithAngle(int $originX, int $originY, int $angle, int $length, int $weight, string $color = '#000000'): Image
+    public function drawArrowWithAngle(int $originX, int $originY, float  $angle, float  $length, int $weight, string $color = '#000000'): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
