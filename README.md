@@ -1,3 +1,7 @@
+[![Packagist](https://img.shields.io/packagist/dt/DantSu/php-image-editor.svg)](https://packagist.org/packages/DantSu/php-image-editor)
+[![Latest Stable Version](https://poser.pugx.org/DantSu/php-image-editor/v/stable)](https://packagist.org/packages/DantSu/php-image-editor)
+[![GitHub license](https://img.shields.io/github/license/DantSu/php-image-editor.svg)](https://github.com/DantSu/php-image-editor/blob/master/LICENSE)
+
 # PHP Image Editor
 
 PHP library to easily edit image with GD extension. Resize, crop, merge, draw, and many more options !
