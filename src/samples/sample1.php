@@ -23,6 +23,6 @@ for($i = 0; $i <= 360; $i+=30) {
 }
 
 $image
-    ->crop(450, 300, Image::ALIGN_CENTER, Image::ALIGN_MIDDLE)
+    ->crop(450, 300)
     ->displayPNG();
 

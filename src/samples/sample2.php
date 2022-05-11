@@ -5,7 +5,7 @@ require_once '../Image.php';
 
 use \DantSu\PHPImageEditor\Image;
 
-\header('Content-type: image/png');
+\header('Content-type: image/jpg');
 
 Image::fromPath(__DIR__ . '/resources/photo.jpg')
     ->downscaleAndCrop(1920, 1080, Image::ALIGN_CENTER, Image::ALIGN_BOTTOM)

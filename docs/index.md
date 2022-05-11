@@ -19,4 +19,4 @@ This is an automatically generated documentation for **PHP Image Editor**.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-11 using [phpDocumentor](http://www.phpdoc.org/)

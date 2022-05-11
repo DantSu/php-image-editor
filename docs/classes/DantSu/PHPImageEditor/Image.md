@@ -26,10 +26,12 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 
 ## Methods
 
+- [__clone](#-__clone) 
 - [getWidth](#-getwidth) 
 - [getHeight](#-getheight) 
 - [getType](#-gettype) 
 - [getImage](#-getimage) 
+- *(static)* [isGdImage](#isgdimage) 
 - [isImageDefined](#-isimagedefined) 
 - *(static)* [newCanvas](#newcanvas) 
 - [resetCanvas](#-resetcanvas) 
@@ -51,6 +53,7 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 - [downscaleAndCrop](#-downscaleandcrop) 
 - [crop](#-crop) 
 - [pasteOn](#-pasteon) 
+- [pasteGdImageOn](#-pastegdimageon) 
 - [alphaMask](#-alphamask) 
 - [grayscale](#-grayscale) 
 - [writeText](#-writetext) 
@@ -77,6 +80,25 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 - [getBase64SourceJPG](#-getbase64sourcejpg) 
 - [getBase64SourceGIF](#-getbase64sourcegif) 
 
+### ->__clone
+
+
+
+
+
+
+
+
+
+
+
+#### Return Value:
+
+ **mixed** : 
+
+
+
+---
 ### ->getWidth
 
 Return the image width
@@ -150,6 +172,31 @@ Return image resource
 #### Return Value:
 
  **resource|\GdImage** : Image resource
+
+
+
+---
+### ::isGdImage
+
+Return true if $image is a resource or a GDImage instance
+
+
+
+* This method is **static**.
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `image` | **mixed** |  |
+
+
+#### Return Value:
+
+ **bool** : True if $image is a resource or a GDImage instance
 
 
 
@@ -509,7 +556,7 @@ Rotate counterclockwise the image
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `angle` | **int** | Angle in degrees |
+| `angle` | **float** | Angle in degrees |
 
 
 #### Return Value:
@@ -669,6 +716,35 @@ Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `image` | **\DantSu\PHPImageEditor\Image** | Image instance to be paste on |
+| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
+### ->pasteGdImageOn
+
+Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `image` | **resource&#124;\GdImage** | Image resource |
+| `imageWidth` | **int** | Image width to paste |
+| `imageHeight` | **int** | Image height to paste |
 | `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
 | `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
 
@@ -866,8 +942,8 @@ Draw a line using angle and length.
 |-----------|------|-------------|
 | `originX` | **int** | Horizontal start position in pixel |
 | `originY` | **int** | Vertical start position in pixel |
-| `angle` | **int** | Counterclockwise angle in degrees |
-| `length` | **int** | Line length in pixel |
+| `angle` | **float** | Counterclockwise angle in degrees |
+| `length` | **float** | Line length in pixel |
 | `weight` | **int** | Line weight in pixel |
 | `color` | **string** | Hexadecimal string color |
 
@@ -896,8 +972,8 @@ Draw an arrow with angle and length.
 |-----------|------|-------------|
 | `originX` | **int** | Horizontal start position in pixel |
 | `originY` | **int** | Vertical start position in pixel |
-| `angle` | **int** | Counterclockwise angle in degrees |
-| `length` | **int** | Line length in pixel |
+| `angle` | **float** | Counterclockwise angle in degrees |
+| `length` | **float** | Line length in pixel |
 | `weight` | **int** | Line weight in pixel |
 | `color` | **string** | Hexadecimal string color |
 
@@ -1300,4 +1376,4 @@ Get image GIF base64 data for <img src=""> tag.
 
 
 ---
-> Automatically generated from source code comments on 2021-09-08 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-11 using [phpDocumentor](http://www.phpdoc.org/)
