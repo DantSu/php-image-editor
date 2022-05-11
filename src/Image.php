@@ -37,6 +37,13 @@ class Image
      */
     private $height;
 
+    public function __clone()
+    {
+        $srcInstance = $this->image;
+        $this
+            ->resetCanvas($this->width, $this->height)
+            ->pasteGdImageOn($srcInstance, $this->width, $this->height, 0, 0);
+    }
 
     /**
      * Return the image width
@@ -79,13 +86,23 @@ class Image
     }
 
     /**
+     * Return true if $image is a resource or a GDImage instance
+     * @param resource|\GdImage A variable to be tested
+     * @return bool True if $image is a resource or a GDImage instance
+     */
+    public static function isGdImage($image): bool
+    {
+        return \is_resource($image) || (\is_object($image) && $image instanceof \GdImage);
+    }
+
+    /**
      * Return true if image is initialized
      *
      * @return bool Is image initialized
      */
     public function isImageDefined(): bool
     {
-        return \is_resource($this->image) || (\is_object($this->image) && $this->image instanceof \GdImage);
+        return static::isGdImage($this->image);
     }
 
     //===============================================================================================================================
@@ -647,13 +664,32 @@ class Image
         if (!$this->isImageDefined() || !$image->isImageDefined()) {
             return $this;
         }
-
-        $posX = $this->convertPosX($posX, $image->getWidth());
-        $posY = $this->convertPosY($posY, $image->getHeight());
+        
+        return $this->pasteGdImageOn($image->getImage(), $image->getWidth(), $image->getHeight(), $posX, $posY);
+    }
+    
+    /**
+     * Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
+     *
+     * @param resource|\GdImage $image Image resource
+     * @param int $imageWidth Image width to paste
+     * @param int $imageHeight Image height to paste
+     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @return $this Fluent interface
+     */
+    public function pasteGdImageOn($image, int $imageWidth, int $imageHeight, $posX = Image::ALIGN_CENTER, $posY = Image::ALIGN_MIDDLE): Image
+    {
+        if (!$this->isImageDefined() || !static::isGdImage($image)) {
+            return $this;
+        }
+        
+        $posX = $this->convertPosX($posX, $imageWidth);
+        $posY = $this->convertPosY($posY, $imageHeight);
 
         \imagesavealpha($this->image, false);
         \imagealphablending($this->image, true);
-        \imagecopy($this->image, $image->getImage(), $posX, $posY, 0, 0, $image->getWidth(), $image->getHeight());
+        \imagecopy($this->image, $image, $posX, $posY, 0, 0, $imageWidth, $imageHeight);
         \imagealphablending($this->image, false);
         \imagesavealpha($this->image, true);
 
