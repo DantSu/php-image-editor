@@ -37,6 +37,12 @@ class Image
      */
     private $height;
 
+    public function __clone()
+    {
+        $copy = imagecreatetruecolor($this->width, $this->height);
+        imagecopy($copy, $this->image, 0, 0, 0, 0, $this->width, $this->height);
+        $this->image = $copy;
+    }
 
     /**
      * Return the image width
