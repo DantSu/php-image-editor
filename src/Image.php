@@ -10,7 +10,6 @@ namespace DantSu\PHPImageEditor;
  * @access public
  * @see https://github.com/DantSu/php-image-editor Github page of this project
  */
-
 class Image
 {
     const ALIGN_LEFT = 'left';
@@ -664,10 +663,10 @@ class Image
         if (!$this->isImageDefined() || !$image->isImageDefined()) {
             return $this;
         }
-        
+
         return $this->pasteGdImageOn($image->getImage(), $image->getWidth(), $image->getHeight(), $posX, $posY);
     }
-    
+
     /**
      * Paste the image at $posX and $posY position (You can use `Image::ALIGN_...`).
      *
@@ -683,7 +682,7 @@ class Image
         if (!$this->isImageDefined() || !static::isGdImage($image)) {
             return $this;
         }
-        
+
         $posX = $this->convertPosX($posX, $imageWidth);
         $posY = $this->convertPosY($posY, $imageHeight);
 
@@ -939,6 +938,33 @@ class Image
         return $this;
     }
 
+    /**
+     * Draw a polygon.
+     *
+     * @param int[] $points Array of polygon's points [x1, y1, x2, y2, x3, y3...]
+     * @param string $color Hexadecimal string color
+     * @return $this Fluent interface
+     */
+    public function drawPolygon(array $points, string $color = '#000000', $antialias = false): Image
+    {
+        if (!$this->isImageDefined()) {
+            return $this;
+        }
+
+        $color = $this->colorAllocate($color);
+
+        if ($color === false) {
+            return $this;
+        }
+
+        if($antialias) {
+            \imageantialias($this->image, true);
+            \imagepolygon($this->image, $points, \count($points) / 2, $color);
+        }
+        \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
+
+        return $this;
+    }
 
     /**
      * Draw a Line from `$originX, $originY` to `$dstX, $dstY`.
@@ -974,16 +1000,6 @@ class Image
      */
     public function drawLineWithAngle(int $originX, int $originY, float $angle, float $length, int $weight, string $color = '#000000'): Image
     {
-        if (!$this->isImageDefined()) {
-            return $this;
-        }
-
-        $color = $this->colorAllocate($color);
-
-        if ($color === false) {
-            return $this;
-        }
-
         $angle = Geometry2D::degrees0to360($angle);
 
         $points1 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle - 90), \floor($weight / 2));
@@ -991,22 +1007,20 @@ class Image
         $points4 = Geometry2D::getDstXY($originX, $originY, Geometry2D::degrees0to360($angle + 90), \floor($weight / 2));
         $points3 = Geometry2D::getDstXY($points4['x'], $points4['y'], $angle, $length);
 
-        $points = [
-            \round($points1['x']),
-            \round($points1['y']),
-            \round($points2['x']),
-            \round($points2['y']),
-            \round($points3['x']),
-            \round($points3['y']),
-            \round($points4['x']),
-            \round($points4['y'])
-        ];
-
-        \imageantialias($this->image, true);
-        \imagepolygon($this->image, $points, 4, $color);
-        \imagefilledpolygon($this->image, $points, 4, $color);
-
-        return $this;
+        return $this->drawPolygon(
+            [
+                \round($points1['x']),
+                \round($points1['y']),
+                \round($points2['x']),
+                \round($points2['y']),
+                \round($points3['x']),
+                \round($points3['y']),
+                \round($points4['x']),
+                \round($points4['y'])
+            ],
+            $color,
+            true
+        );
     }
 
     /**
@@ -1020,7 +1034,7 @@ class Image
      * @param string $color Hexadecimal string color
      * @return $this Fluent interface
      */
-    public function drawArrowWithAngle(int $originX, int $originY, float  $angle, float  $length, int $weight, string $color = '#000000'): Image
+    public function drawArrowWithAngle(int $originX, int $originY, float $angle, float $length, int $weight, string $color = '#000000'): Image
     {
         if (!$this->isImageDefined()) {
             return $this;

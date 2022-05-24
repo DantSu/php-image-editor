@@ -59,6 +59,7 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 - [writeText](#-writetext) 
 - [writeTextAndGetBoundingBox](#-writetextandgetboundingbox) 
 - [drawRectangle](#-drawrectangle) 
+- [drawPolygon](#-drawpolygon) 
 - [drawLine](#-drawline) 
 - [drawLineWithAngle](#-drawlinewithangle) 
 - [drawArrowWithAngle](#-drawarrowwithangle) 
@@ -895,6 +896,33 @@ Draw a rectangle.
 
 
 ---
+### ->drawPolygon
+
+Draw a polygon.
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `points` | **int[]** | Array of polygon&#039;s points [x1, y1, x2, y2, x3, y3...] |
+| `color` | **string** | Hexadecimal string color |
+| `antialias` | **mixed** |  |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
 ### ->drawLine
 
 Draw a Line from `$originX, $originY` to `$dstX, $dstY`.
@@ -1376,4 +1404,4 @@ Get image GIF base64 data for <img src=""> tag.
 
 
 ---
-> Automatically generated from source code comments on 2022-05-11 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)
