@@ -961,7 +961,12 @@ class Image
             \imageantialias($this->image, true);
             \imagepolygon($this->image, $points, \count($points) / 2, $color);
         }
+
         \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
+
+        if($antialias) {
+            \imageantialias($this->image, false);
+        }
 
         return $this;
     }
