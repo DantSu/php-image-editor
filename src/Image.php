@@ -136,7 +136,7 @@ class Image
 
         \imagealphablending($this->image, false);
         \imagesavealpha($this->image, true);
-        \imagecolortransparent($this->image, \imagecolorallocate($this->image, 0, 0, 0));
+        \imagefill($this->image, 0, 0, \imagecolorallocatealpha($this->image, 0, 0, 0, 127));
 
         $this->width = $width;
         $this->height = $height;
@@ -478,14 +478,9 @@ class Image
             return $this;
         }
 
-        if (
-            ($image = \imagecreatetruecolor($width, $height)) !== false &&
-            \imagealphablending($image, false) !== false &&
-            \imagesavealpha($image, true) !== false &&
-            ($transparent = $this->colorAllocate('#000000FF')) !== false &&
-            \imagefill($image, 0, 0, $transparent) !== false &&
-            \imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $this->width, $this->height) !== false
-        ) {
+        $image = Image::newCanvas($width, $height)->getImage();
+
+        if (\imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $this->width, $this->height) !== false) {
             $this->image = $image;
             $this->width = $width;
             $this->height = $height;
@@ -511,7 +506,6 @@ class Image
         if ($this->height < $height) {
             $height = $this->height;
         }
-
 
         $finalWidth = \round($this->width * $height / $this->height);
         $finalHeight = $height;
@@ -724,6 +718,10 @@ class Image
 
                 if ($alpha != 127) {
                     $rgb = \imagecolorat($this->image, $j, $i);
+                    $alpha = 127 - \ceil((127 - (($rgb >> 24) & 0x7F)) * (127 - $alpha) / 127);
+                }
+
+                if ($alpha != 127) {
                     $red = ($rgb >> 16) & 0xFF;
                     $green = ($rgb >> 8) & 0xFF;
                     $blue = $rgb & 0xFF;
@@ -742,6 +740,25 @@ class Image
 
         \imagedestroy($this->image);
         $this->image = $newImage;
+
+        return $this;
+    }
+
+    /**
+     * change the image opacity
+     *
+     * @param float $opacity Opacity (0 to 1)
+     * @return $this Fluent interface
+     */
+    public function setOpacity(float $opacity): Image
+    {
+        if (!$this->isImageDefined()) {
+            return $this;
+        }
+
+        \imagealphablending($this->image, false);
+        \imagesavealpha($this->image, true);
+        \imagefilter($this->image, IMG_FILTER_COLORIZE, 0, 0, 0, 127 * (1 - $opacity));
 
         return $this;
     }
@@ -1204,18 +1221,17 @@ class Image
     /**
      * Get image raw data
      *
-     * @param string $nameFunction Image function to be called
-     * @param int $quality JPG quality : 0 to 100
+     * @param callable $imgFunction Image function to be called
      * @return string Data
      */
-    private function getData(string $nameFunction, int $quality = -1): string
+    private function getData(callable $imgFunction): string
     {
         if (!$this->isImageDefined()) {
             return '';
         }
 
         \ob_start();
-        $nameFunction($this->image, null, $quality, -1);
+        $imgFunction();
         $image_data = \ob_get_contents();
         \ob_end_clean();
 
@@ -1229,7 +1245,7 @@ class Image
      */
     public function getDataPNG(): string
     {
-        return $this->getData('imagepng');
+        return $this->getData(function () {$this->displayPNG();});
     }
 
     /**
@@ -1240,7 +1256,7 @@ class Image
      */
     public function getDataJPG(int $quality = -1): string
     {
-        return $this->getData('imagejpeg', $quality);
+        return $this->getData(function () use ($quality) {$this->displayJPG($quality);});
     }
 
     /**
@@ -1250,7 +1266,7 @@ class Image
      */
     public function getDataGIF(): string
     {
-        return $this->getData('imagegif');
+        return $this->getData(function () {$this->displayGIF();});
     }
 
     /**

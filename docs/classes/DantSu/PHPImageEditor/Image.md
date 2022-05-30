@@ -55,6 +55,7 @@ DantSu\PHPImageEditor\Image is PHP library to easily edit image with GD extensio
 - [pasteOn](#-pasteon) 
 - [pasteGdImageOn](#-pastegdimageon) 
 - [alphaMask](#-alphamask) 
+- [setOpacity](#-setopacity) 
 - [grayscale](#-grayscale) 
 - [writeText](#-writetext) 
 - [writeTextAndGetBoundingBox](#-writetextandgetboundingbox) 
@@ -782,6 +783,31 @@ Use a grayscale image (`$mask`) to apply transparency to the image.
 
 
 ---
+### ->setOpacity
+
+change the image opacity
+
+
+
+
+
+
+
+
+#### Parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `opacity` | **float** | Opacity (0 to 1) |
+
+
+#### Return Value:
+
+ **$this** : Fluent interface
+
+
+
+---
 ### ->grayscale
 
 Apply a grayscale filter on the image.
@@ -1404,4 +1430,4 @@ Get image GIF base64 data for <img src=""> tag.
 
 
 ---
-> Automatically generated from source code comments on 2022-05-24 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-05-30 using [phpDocumentor](http://www.phpdoc.org/)
