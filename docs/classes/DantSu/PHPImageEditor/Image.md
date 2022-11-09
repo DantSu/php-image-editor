@@ -848,13 +848,14 @@ Write text on the image.
 |-----------|------|-------------|
 | `string` | **string** | Text to be added on the image |
 | `fontPath` | **string** | Path to the TTF file |
-| `fontSize` | **int** | Font size |
+| `fontSize` | **float** | Font size |
 | `color` | **string** | Hexadecimal string color |
-| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
-| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
-| `anchorX` | **int&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
-| `anchorY` | **int&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
-| `rotation` | **int** | Counterclockwise text rotation in degrees |
+| `posX` | **float&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **float&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `anchorX` | **float&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `anchorY` | **float&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `rotation` | **float** | Counterclockwise text rotation in degrees |
+| `letterSpacing` | **float** | add space between letters |
 
 
 #### Return Value:
@@ -881,18 +882,19 @@ Write text on the image and get the bounding box of the text in the image.
 |-----------|------|-------------|
 | `string` | **string** | Text to be added on the image |
 | `fontPath` | **string** | Path to the TTF file |
-| `fontSize` | **int** | Font size |
+| `fontSize` | **float** | Font size |
 | `color` | **string** | Hexadecimal string color |
-| `posX` | **int&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
-| `posY` | **int&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
-| `anchorX` | **int&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
-| `anchorY` | **int&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
-| `rotation` | **int** | Counterclockwise text rotation in degrees |
+| `posX` | **float&#124;string** | Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `posY` | **float&#124;string** | Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `anchorX` | **float&#124;string** | Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT` |
+| `anchorY` | **float&#124;string** | Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM` |
+| `rotation` | **float** | Counterclockwise text rotation in degrees |
+| `letterSpacing` | **float** | add space between letters |
 
 
 #### Return Value:
 
- **array** : Pixels positions of the
+ **array** : Bounding box positions of the text
 
 
 

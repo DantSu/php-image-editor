@@ -318,7 +318,7 @@ class Image
 
         $image = \curl_exec($curl);
 
-        if($failOnError && \curl_errno($curl)){
+        if ($failOnError && \curl_errno($curl)) {
             throw new \Exception(\curl_error($curl));
         }
 
@@ -635,9 +635,9 @@ class Image
      * Allocate a new color to the image.
      *
      * @param string $color Hexadecimal string color
-     * @return int Color id
+     * @return int|false Color id
      */
-    private function colorAllocate(string $color): int
+    private function colorAllocate(string $color)
     {
         $color = static::formatColor($color);
         $red = \hexdec(\substr($color, 0, 2));
@@ -645,12 +645,12 @@ class Image
         $blue = \hexdec(\substr($color, 4, 2));
         $alpha = \floor(\hexdec(\substr($color, 6, 2)) / 2);
 
-        $newColor = \imagecolorexactalpha($this->image, $red, $green, $blue, $alpha);
-        if ($newColor === -1) {
-            $newColor = \imagecolorallocatealpha($this->image, $red, $green, $blue, $alpha);
+        $colorId = \imagecolorexactalpha($this->image, $red, $green, $blue, $alpha);
+        if ($colorId === -1) {
+            $colorId = \imagecolorallocatealpha($this->image, $red, $green, $blue, $alpha);
         }
 
-        return $newColor;
+        return $colorId;
     }
 
 
@@ -801,18 +801,19 @@ class Image
      *
      * @param string $string Text to be added on the image
      * @param string $fontPath Path to the TTF file
-     * @param int $fontSize Font size
+     * @param float $fontSize Font size
      * @param string $color Hexadecimal string color
-     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
-     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
-     * @param int|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
-     * @param int|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
-     * @param int $rotation Counterclockwise text rotation in degrees
+     * @param float|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param float|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param float|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param float|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param float $rotation Counterclockwise text rotation in degrees
+     * @param float $letterSpacing add space between letters
      * @return $this Fluent interface
      */
-    public function writeText(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0, int $letter_spacing = 0): Image
+    public function writeText(string $string, string $fontPath, float $fontSize, string $color = 'ffffff', $posX = 0, $posY = 0, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE, float $rotation = 0, float $letterSpacing = 0): Image
     {
-        $this->writeTextAndGetBoundingBox($string, $fontPath, $fontSize, $color, $posX, $posY, $anchorX, $anchorY, $rotation, $letter_spacing);
+        $this->writeTextAndGetBoundingBox($string, $fontPath, $fontSize, $color, $posX, $posY, $anchorX, $anchorY, $rotation, $letterSpacing);
         return $this;
     }
 
@@ -821,16 +822,17 @@ class Image
      *
      * @param string $string Text to be added on the image
      * @param string $fontPath Path to the TTF file
-     * @param int $fontSize Font size
+     * @param float $fontSize Font size
      * @param string $color Hexadecimal string color
-     * @param int|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
-     * @param int|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
-     * @param int|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
-     * @param int|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
-     * @param int $rotation Counterclockwise text rotation in degrees
-     * @return array Pixels positions of the
+     * @param float|string $posX Left position in pixel. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param float|string $posY Top position in pixel. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param float|string $anchorX Horizontal anchor of the text. You can use `Image::ALIGN_LEFT`, `Image::ALIGN_CENTER`, `Image::ALIGN_RIGHT`
+     * @param float|string $anchorY Vertical anchor of the text. You can use `Image::ALIGN_TOP`, `Image::ALIGN_MIDDLE`, `Image::ALIGN_BOTTOM`
+     * @param float $rotation Counterclockwise text rotation in degrees
+     * @param float $letterSpacing add space between letters
+     * @return array Bounding box positions of the text
      */
-    public function writeTextAndGetBoundingBox(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0, int $letter_spacing = 0): array
+    public function writeTextAndGetBoundingBox(string $string, string $fontPath, float $fontSize, string $color = 'ffffff', $posX = 0, $posY = 0, $anchorX = Image::ALIGN_CENTER, $anchorY = Image::ALIGN_MIDDLE, float $rotation = 0, float $letterSpacing = 0): array
     {
         if (!$this->isImageDefined()) {
             return [];
@@ -858,7 +860,7 @@ class Image
         ) {
             if (
                 ($newImg = \imagecreatetruecolor(1, 1)) === false ||
-                ($posText = $this->imagettftextWithSpacing($newImg, $fontSize, $rotation, 0, 0, $color, $fontPath, $string, $letter_spacing)) === false
+                ($posText = $this->imagettftextWithSpacing($newImg, $fontSize, $rotation, 0, 0, $color, $fontPath, $string, $letterSpacing)) === false
             ) {
                 return [];
             }
@@ -884,6 +886,7 @@ class Image
             }
 
             $sizeWidth = $xMax - $xMin;
+            $sizeHeight = $yMax - $yMin;
 
             switch ($anchorX) {
                 case static::ALIGN_LEFT :
@@ -898,17 +901,18 @@ class Image
             }
             switch ($anchorY) {
                 case static::ALIGN_TOP :
-                    $posY = $posY + $fontSize;
+                    $posY = $posY - $yMin;
                     break;
                 case static::ALIGN_MIDDLE :
-                    $posY = $posY + $fontSize / 2;
+                    $posY = $posY - $sizeHeight / 2 - $yMin;
                     break;
                 case static::ALIGN_BOTTOM :
+                    $posY = $posY - $sizeHeight - $yMin;
                     break;
             }
         }
 
-        $posText = $this->imagettftextWithSpacing($this->image, $fontSize, $rotation, $posX, $posY, $color, $fontPath, $string, $letter_spacing);
+        $posText = $this->imagettftextWithSpacing($this->image, $fontSize, $rotation, $posX, $posY, $color, $fontPath, $string, $letterSpacing);
 
         if ($posText === false) {
             return [];
@@ -943,35 +947,52 @@ class Image
 
     /**
      * @param $image
-     * @param $size
-     * @param $angle
-     * @param $x
-     * @param $y
-     * @param $color
-     * @param $font
-     * @param $text
-     * @param int $spacing
-     * @return array
+     * @param float $size
+     * @param float $angle
+     * @param float $x
+     * @param float $y
+     * @param int $color
+     * @param string $font
+     * @param string $text
+     * @param float $spacing
+     * @return array|false
      */
-    private function imagettftextWithSpacing($image, float $size, float $angle, float $x, float $y, int $color, string $font, string $text, int $spacing = 0)
+    private function imagettftextWithSpacing($image, float $size, float $angle, float $x, float $y, int $color, string $font, string $text, float $spacing = 0)
     {
-        if ($spacing == 0)
-        {
+        if ($spacing == 0) {
             return \imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
-        }
-        else
-        {
-            $temp_x = $x;
-            $temp_y = $y;
-            $posText = [];
-            for ($i = 0; $i < \mb_strlen($text); ++$i)
-            {
-                $posText = \imagettftext($image, $size, $angle, $temp_x, $temp_y, $color, $font, $text[$i]);
-                $bbox = \imagettfbbox($size, 0, $font, $text[$i]);
-                $temp_x += \cos(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
-                $temp_y -= \sin(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
+        } else {
+            $length = \mb_strlen($text);
+
+            if ($length == 0) {
+                return false;
             }
-            return $posText;
+
+            $letterPos = ['x' => $x, 'y' => $y];
+            $textWidth = $spacing * ($length - 1);
+            $top = 0;
+            $bottom = 0;
+
+            for ($i = 0; $i < $length; ++$i) {
+                \imagettftext($image, $size, $angle, $letterPos['x'], $letterPos['y'], $color, $font, $text[$i]);
+                $bbox = \imagettfbbox($size, 0, $font, $text[$i]);
+                $letterPos = Geometry2D::getDstXY($letterPos['x'], $letterPos['y'], $angle, $spacing + $bbox[2]);
+
+                $textWidth += $bbox[2];
+                if ($top > $bbox[5]) {
+                    $top = $bbox[5];
+                }
+                if ($bottom < $bbox[1]) {
+                    $bottom = $bbox[1];
+                }
+            }
+
+            $bottomLeft = Geometry2D::getDstXY($x, $y, $angle - 90, $bottom);
+            $bottomRight = Geometry2D::getDstXY($bottomLeft['x'], $bottomLeft['y'], $angle, $textWidth);
+            $topLeft = Geometry2D::getDstXY($x, $y, $angle + 90, \abs($top));
+            $topRight = Geometry2D::getDstXY($topLeft['x'], $topLeft['y'], $angle, $textWidth);
+
+            return [$bottomLeft['x'], $bottomLeft['y'], $bottomRight['x'], $bottomRight['y'], $topRight['x'], $topRight['y'], $topLeft['x'], $topLeft['y']];
         }
     }
 
@@ -1010,7 +1031,7 @@ class Image
      * @param string $color Hexadecimal string color
      * @return $this Fluent interface
      */
-    public function drawPolygon(array $points, string $color = '#000000', $antialias = false): Image
+    public function drawPolygon(array $points, string $color = '000000', $antialias = false): Image
     {
         if (!$this->isImageDefined()) {
             return $this;
@@ -1022,14 +1043,14 @@ class Image
             return $this;
         }
 
-        if($antialias) {
+        if ($antialias) {
             \imageantialias($this->image, true);
             \imagepolygon($this->image, $points, \count($points) / 2, $color);
         }
 
         \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
 
-        if($antialias) {
+        if ($antialias) {
             \imageantialias($this->image, false);
         }
 
@@ -1280,10 +1301,10 @@ class Image
 
         \ob_start();
         $imgFunction();
-        $image_data = \ob_get_contents();
+        $imageData = \ob_get_contents();
         \ob_end_clean();
 
-        return $image_data;
+        return $imageData;
     }
 
     /**
@@ -1293,7 +1314,9 @@ class Image
      */
     public function getDataPNG(): string
     {
-        return $this->getData(function () {$this->displayPNG();});
+        return $this->getData(function () {
+            $this->displayPNG();
+        });
     }
 
     /**
@@ -1304,7 +1327,9 @@ class Image
      */
     public function getDataJPG(int $quality = -1): string
     {
-        return $this->getData(function () use ($quality) {$this->displayJPG($quality);});
+        return $this->getData(function () use ($quality) {
+            $this->displayJPG($quality);
+        });
     }
 
     /**
@@ -1314,7 +1339,9 @@ class Image
      */
     public function getDataGIF(): string
     {
-        return $this->getData(function () {$this->displayGIF();});
+        return $this->getData(function () {
+            $this->displayGIF();
+        });
     }
 
     /**
