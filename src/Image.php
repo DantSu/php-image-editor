@@ -810,9 +810,9 @@ class Image
      * @param int $rotation Counterclockwise text rotation in degrees
      * @return $this Fluent interface
      */
-    public function writeText(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0): Image
+    public function writeText(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0, int $letter_spacing = 0): Image
     {
-        $this->writeTextAndGetBoundingBox($string, $fontPath, $fontSize, $color, $posX, $posY, $anchorX, $anchorY, $rotation);
+        $this->writeTextAndGetBoundingBox($string, $fontPath, $fontSize, $color, $posX, $posY, $anchorX, $anchorY, $rotation, $letter_spacing);
         return $this;
     }
 
@@ -830,7 +830,7 @@ class Image
      * @param int $rotation Counterclockwise text rotation in degrees
      * @return array Pixels positions of the
      */
-    public function writeTextAndGetBoundingBox(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0): array
+    public function writeTextAndGetBoundingBox(string $string, string $fontPath, int $fontSize, string $color = '#ffffff', $posX = 0, $posY = 0, string $anchorX = Image::ALIGN_CENTER, string $anchorY = Image::ALIGN_MIDDLE, int $rotation = 0, int $letter_spacing = 0): array
     {
         if (!$this->isImageDefined()) {
             return [];
@@ -858,7 +858,7 @@ class Image
         ) {
             if (
                 ($newImg = \imagecreatetruecolor(1, 1)) === false ||
-                ($posText = \imagettftext($newImg, $fontSize, $rotation, 0, 0, $color, $fontPath, $string)) === false
+                ($posText = $this->imagettftextWithSpacing($newImg, $fontSize, $rotation, 0, 0, $color, $fontPath, $string, $letter_spacing)) === false
             ) {
                 return [];
             }
@@ -908,7 +908,7 @@ class Image
             }
         }
 
-        $posText = \imagettftext($this->image, $fontSize, $rotation, $posX, $posY, $color, $fontPath, $string);
+        $posText = $this->imagettftextWithSpacing($this->image, $fontSize, $rotation, $posX, $posY, $color, $fontPath, $string, $letter_spacing);
 
         if ($posText === false) {
             return [];
@@ -939,6 +939,40 @@ class Image
                 'y' => $posY
             ]
         ];
+    }
+
+    /**
+     * @param $image
+     * @param $size
+     * @param $angle
+     * @param $x
+     * @param $y
+     * @param $color
+     * @param $font
+     * @param $text
+     * @param int $spacing
+     * @return array
+     */
+    private function imagettftextWithSpacing($image, float $size, float $angle, float $x, float $y, int $color, string $font, string $text, int $spacing = 0)
+    {
+        if ($spacing == 0)
+        {
+            return \imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
+        }
+        else
+        {
+            $temp_x = $x;
+            $temp_y = $y;
+            $posText = [];
+            for ($i = 0; $i < \mb_strlen($text); ++$i)
+            {
+                $posText = \imagettftext($image, $size, $angle, $temp_x, $temp_y, $color, $font, $text[$i]);
+                $bbox = \imagettfbbox($size, 0, $font, $text[$i]);
+                $temp_x += \cos(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
+                $temp_y -= \sin(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
+            }
+            return $posText;
+        }
     }
 
     /**
