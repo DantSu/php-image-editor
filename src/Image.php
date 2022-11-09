@@ -937,25 +937,25 @@ class Image
      * @param $font
      * @param $text
      * @param int $spacing
-     * @return array|false
+     * @return array
      */
-    private function imagettftextWithSpacing($image, $size, $angle, $x, $y, $color, $font, $text, int $spacing = 0)
+    private function imagettftextWithSpacing($image, float $size, float $angle, float $x, float $y, int $color, string $font, string $text, int $spacing = 0)
     {
         if ($spacing == 0)
         {
-            return imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
+            return \imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
         }
         else
         {
             $temp_x = $x;
             $temp_y = $y;
-            $posText = false;
-            for ($i = 0; $i < strlen($text); $i++)
+            $posText = [];
+            for ($i = 0; $i < \mb_strlen($text); ++$i)
             {
-                $posText = imagettftext($image, $size, $angle, $temp_x, $temp_y, $color, $font, $text[$i]);
-                $bbox = imagettfbbox($size, 0, $font, $text[$i]);
-                $temp_x += cos(deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
-                $temp_y -= sin(deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
+                $posText = \imagettftext($image, $size, $angle, $temp_x, $temp_y, $color, $font, $text[$i]);
+                $bbox = \imagettfbbox($size, 0, $font, $text[$i]);
+                $temp_x += \cos(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
+                $temp_y -= \sin(\deg2rad($angle)) * ($spacing + ($bbox[2] - $bbox[0]));
             }
             return $posText;
         }
