@@ -288,6 +288,7 @@ class Image
      * @param array $curlOptions cURL options
      * @param bool $failOnError If true, throw an exception if the url cannot be loaded
      * @return Image Return Image instance
+     * @throws \Exception
      */
     public static function fromCurl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
@@ -301,6 +302,7 @@ class Image
      * @param array $curlOptions cURL options
      * @param bool $failOnError If true, throw an exception if the url cannot be loaded
      * @return $this Fluent interface
+     * @throws \Exception
      */
     public function curl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
@@ -309,18 +311,18 @@ class Image
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT => 5,
         ];
-    
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt_array($curl, $defaultCurlOptions + $curlOptions);
 
-        $image = curl_exec($curl);
+        $curl = \curl_init();
+        \curl_setopt($curl, CURLOPT_URL, $url);
+        \curl_setopt_array($curl, $defaultCurlOptions + $curlOptions);
 
-        if($failOnError && curl_errno($curl)){
-            throw new \Exception(curl_error($curl));
+        $image = \curl_exec($curl);
+
+        if($failOnError && \curl_errno($curl)){
+            throw new \Exception(\curl_error($curl));
         }
 
-        curl_close($curl);
+        \curl_close($curl);
 
         if ($image === false) {
             return $this->resetFields();
@@ -620,13 +622,10 @@ class Image
                 $g = \substr($stringColor, 1, 1);
                 $b = \substr($stringColor, 2, 1);
                 return $r . $r . $g . $g . $b . $b . '00';
-                break;
             case 6 :
                 return $stringColor . '00';
-                break;
             case 8 :
                 return $stringColor;
-                break;
             default:
                 return '00000000';
         }

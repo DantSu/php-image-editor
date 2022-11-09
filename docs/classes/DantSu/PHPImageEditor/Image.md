@@ -490,6 +490,8 @@ Create an Image instance from base64 image data.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `url` | **string** | Url of the image file |
+| `curlOptions` | **array** | cURL options |
+| `failOnError` | **bool** | If true, throw an exception if the url cannot be loaded |
 
 
 #### Return Value:
@@ -515,6 +517,8 @@ Open image from URL with cURL.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `url` | **string** | Url of the image file |
+| `curlOptions` | **array** | cURL options |
+| `failOnError` | **bool** | If true, throw an exception if the url cannot be loaded |
 
 
 #### Return Value:
@@ -1430,4 +1434,4 @@ Get image GIF base64 data for <img src=""> tag.
 
 
 ---
-> Automatically generated from source code comments on 2022-05-30 using [phpDocumentor](http://www.phpdoc.org/)
+> Automatically generated from source code comments on 2022-11-09 using [phpDocumentor](http://www.phpdoc.org/)
