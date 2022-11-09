@@ -12,6 +12,7 @@ namespace DantSu\PHPImageEditor;
  */
 class Image
 {
+
     const ALIGN_LEFT = 'left';
     const ALIGN_CENTER = 'center';
     const ALIGN_RIGHT = 'right';
@@ -284,27 +285,41 @@ class Image
      * (Static method) Open image from URL with cURL.
      *
      * @param string $url Url of the image file
+     * @param array $curlOptions cURL options
+     * @param bool $failOnError If true, throw an exception if the url cannot be loaded
      * @return Image Return Image instance
      */
-    public static function fromCurl(string $url): Image
+    public static function fromCurl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
-        return (new Image)->curl($url);
+        return (new Image)->curl($url, $curlOptions, $failOnError);
     }
 
     /**
      * Open image from URL with cURL.
      *
      * @param string $url Url of the image file
+     * @param array $curlOptions cURL options
+     * @param bool $failOnError If true, throw an exception if the url cannot be loaded
      * @return $this Fluent interface
      */
-    public function curl(string $url): Image
+    public function curl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
+        $defaultCurlOptions = [
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 5,
+        ];
+    
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+        curl_setopt_array($curl, $defaultCurlOptions + $curlOptions);
+
         $image = curl_exec($curl);
+
+        if($failOnError && curl_errno($curl)){
+            throw new \Exception(curl_error($curl));
+        }
+
         curl_close($curl);
 
         if ($image === false) {
