@@ -37,16 +37,6 @@ class Image
      */
     private $height;
 
-    /**
-     * @array $curlOptions array
-     * Default curl options for the Image library
-     */
-    private $curlOptions = [
-        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0',
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_TIMEOUT => 5,
-    ];
-
     public function __clone()
     {
         $srcInstance = $this->image;
@@ -314,9 +304,15 @@ class Image
      */
     public function curl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
+        $defaultCurlOptions = [
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 5,
+        ];
+    
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt_array($curl, $this->curlOptions + $curlOptions);
+        curl_setopt_array($curl, $defaultCurlOptions + $curlOptions);
 
         $image = curl_exec($curl);
 
