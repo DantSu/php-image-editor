@@ -974,8 +974,9 @@ class Image
             $bottom = 0;
 
             for ($i = 0; $i < $length; ++$i) {
-                \imagettftext($image, $size, $angle, $letterPos['x'], $letterPos['y'], $color, $font, $text[$i]);
-                $bbox = \imagettfbbox($size, 0, $font, $text[$i]);
+                $char = \mb_substr($text, $i, 1);
+                \imagettftext($image, $size, $angle, $letterPos['x'], $letterPos['y'], $color, $font, $char);
+                $bbox = \imagettfbbox($size, 0, $font, $char);
                 $letterPos = Geometry2D::getDstXY($letterPos['x'], $letterPos['y'], $angle, $spacing + $bbox[2]);
 
                 $textWidth += $bbox[2];
