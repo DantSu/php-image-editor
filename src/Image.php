@@ -1045,10 +1045,18 @@ class Image
 
         if ($antialias) {
             \imageantialias($this->image, true);
-            \imagepolygon($this->image, $points, \count($points) / 2, $color);
+            if (PHP_MAJOR_VERSION >= 8) {
+                \imagepolygon($this->image, $points, $color);
+            } else {
+                \imagepolygon($this->image, $points, \count($points) / 2, $color);
+            }
         }
 
-        \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
+        if (PHP_MAJOR_VERSION >= 8) {
+            \imagefilledpolygon($this->image, $points, $color);
+        } else {
+            \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
+        }
 
         if ($antialias) {
             \imageantialias($this->image, false);
