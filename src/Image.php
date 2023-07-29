@@ -380,11 +380,11 @@ class Image
             case static::ALIGN_LEFT:
                 return 0;
             case static::ALIGN_CENTER:
-                return \round($this->width / 2 - $width / 2);
+                return $this->width / 2 - $width / 2;
             case static::ALIGN_RIGHT:
                 return $this->width - $width;
         }
-        return $posX;
+        return \round($posX);
     }
 
     /**
@@ -400,11 +400,11 @@ class Image
             case static::ALIGN_TOP:
                 return 0;
             case static::ALIGN_MIDDLE:
-                return \round($this->height / 2 - $height / 2);
+                return $this->height / 2 - $height / 2;
             case static::ALIGN_BOTTOM:
                 return $this->height - $height;
         }
-        return $posY;
+        return \round($posY);
     }
 
     //===============================================================================================================================
@@ -772,7 +772,7 @@ class Image
 
         \imagealphablending($this->image, false);
         \imagesavealpha($this->image, true);
-        \imagefilter($this->image, IMG_FILTER_COLORIZE, 0, 0, 0, 127 * (1 - $opacity));
+        \imagefilter($this->image, IMG_FILTER_COLORIZE, 0, 0, 0, \round(127 * (1 - $opacity)));
 
         return $this;
     }
