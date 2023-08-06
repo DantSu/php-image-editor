@@ -380,7 +380,7 @@ class Image
             case static::ALIGN_LEFT:
                 return 0;
             case static::ALIGN_CENTER:
-                return $this->width / 2 - $width / 2;
+                return \round($this->width / 2 - $width / 2);
             case static::ALIGN_RIGHT:
                 return $this->width - $width;
         }
@@ -400,7 +400,7 @@ class Image
             case static::ALIGN_TOP:
                 return 0;
             case static::ALIGN_MIDDLE:
-                return $this->height / 2 - $height / 2;
+                return \round($this->height / 2 - $height / 2);
             case static::ALIGN_BOTTOM:
                 return $this->height - $height;
         }
@@ -960,7 +960,7 @@ class Image
     private function imagettftextWithSpacing($image, float $size, float $angle, float $x, float $y, int $color, string $font, string $text, float $spacing = 0)
     {
         if ($spacing == 0) {
-            return \imagettftext($image, $size, $angle, $x, $y, $color, $font, $text);
+            return \imagettftext($image, $size, $angle, \round($x), \round($y), $color, $font, $text);
         } else {
             $length = \mb_strlen($text);
 
@@ -975,7 +975,7 @@ class Image
 
             for ($i = 0; $i < $length; ++$i) {
                 $char = \mb_substr($text, $i, 1);
-                \imagettftext($image, $size, $angle, $letterPos['x'], $letterPos['y'], $color, $font, $char);
+                \imagettftext($image, $size, $angle, \round($letterPos['x']), \round($letterPos['y']), $color, $font, $char);
                 $bbox = \imagettfbbox($size, 0, $font, $char);
                 $letterPos = Geometry2D::getDstXY($letterPos['x'], $letterPos['y'], $angle, $spacing + $bbox[2]);
 
