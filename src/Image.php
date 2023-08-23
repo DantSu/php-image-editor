@@ -307,7 +307,8 @@ class Image
     public function curl(string $url, array $curlOptions = [], bool $failOnError = false): Image
     {
         $defaultCurlOptions = [
-            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',
+            CURLOPT_REFERER => \strtolower($_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]),
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT => 5,
         ];

@@ -8,7 +8,7 @@ use \DantSu\PHPImageEditor\Image;
 \header('Content-type: image/png');
 
 $image1 = Image::newCanvas(500, 500);
-$bbox = $image1->writeTextAndGetBoundingBox('I got the power !', __DIR__ . '/resources/font.ttf', 40, '#FFFFFF', Image::ALIGN_RIGHT, Image::ALIGN_BOTTOM, Image::ALIGN_RIGHT, Image::ALIGN_BOTTOM, 0, 1);
+$bbox = $image1->writeTextAndGetBoundingBox('I got the power !', __DIR__ . '/resources/font.ttf', 40, '#FFFFFF', Image::ALIGN_RIGHT, Image::ALIGN_BOTTOM, Image::ALIGN_RIGHT, Image::ALIGN_BOTTOM, 0, 5);
 
 Image::newCanvas(500, 500)
     ->drawPolygon(
