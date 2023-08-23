@@ -217,7 +217,7 @@ class Image
     public function form(array $file): Image
     {
         if (isset($file) && isset($file["name"]) && $file["name"] != "") {
-            $this->fromPath($file["tmp_name"]);
+            $this->path($file["tmp_name"]);
         }
         return $this;
     }
@@ -278,7 +278,7 @@ class Image
      */
     public function base64(string $base64): Image
     {
-        return $this->fromData(\base64_decode($base64));
+        return $this->data(\base64_decode($base64));
     }
 
     /**
@@ -329,7 +329,7 @@ class Image
             return $this->resetFields();
         }
 
-        return $this->fromData($image);
+        return $this->data($image);
     }
 
 
