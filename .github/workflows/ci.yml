@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
+        experimental: [false]
+        include:
+          # Upcoming PHP version: report problems early without failing the build.
+          - php: '8.6'
+            experimental: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, gd, mbstring
+          ini-values: error_reporting=-1, display_errors=On, zend.assertions=1
+          coverage: none
+
+      - name: Install dependencies
+        # No lock file is committed, so every PHP version resolves its own compatible PHPUnit release.
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: highest
+
+      - name: Run tests
+        run: vendor/bin/phpunit
