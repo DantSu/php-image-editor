@@ -62,6 +62,40 @@ final class LoadingTest extends TestCase
         $this->assertFalse($image->isImageDefined());
     }
 
+    public function testFromPathWithUnsupportedFormatReturnsUndefinedImage(): void
+    {
+        $path = \sys_get_temp_dir() . '/php-image-editor-test-' . \bin2hex(\random_bytes(4)) . '.bmp';
+        \imagebmp(\imagecreatetruecolor(2, 2), $path);
+
+        try {
+            $image = $this->assertNoPhpErrors(static fn() => Image::fromPath($path));
+        } finally {
+            \unlink($path);
+        }
+
+        $this->assertFalse($image->isImageDefined());
+        $this->assertSame(0, $image->getWidth());
+    }
+
+    public function testPathFailureResetsPreviouslyLoadedImage(): void
+    {
+        $image = Image::fromPath(self::RESOURCES_DIR . '/watermark.png');
+
+        $this->assertNoPhpErrors(static fn() => $image->path(self::FIXTURES_DIR . '/does-not-exist.png'));
+
+        $this->assertFalse($image->isImageDefined());
+        $this->assertSame(0, $image->getWidth());
+    }
+
+    public function testFromPathAcceptsFileUrl(): void
+    {
+        $url = $this->fileUrl(self::RESOURCES_DIR . '/watermark.png');
+
+        $image = $this->assertNoPhpErrors(static fn() => Image::fromPath($url));
+
+        $this->assertTrue($image->isImageDefined());
+    }
+
     /**
      * D7: getWidth(), getHeight() and getType() are declared as int but returned null for an undefined image (TypeError).
      */

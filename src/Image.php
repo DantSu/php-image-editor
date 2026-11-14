@@ -48,32 +48,32 @@ class Image
     /**
      * Return the image width
      *
-     * @return int Image width
+     * @return int Image width, 0 if the image is not defined
      */
     public function getWidth(): int
     {
-        return $this->width;
+        return $this->width ?? 0;
     }
 
     /**
      * Return the image height
      *
-     * @return int Image height
+     * @return int Image height, 0 if the image is not defined
      */
     public function getHeight(): int
     {
-        return $this->height;
+        return $this->height ?? 0;
     }
 
     /**
      * Return the image type
      * Image type : 1 GIF; 2 JPG; 3 PNG
      *
-     * @return int Image type
+     * @return int Image type, 0 if the image is not defined
      */
     public function getType(): int
     {
-        return $this->type;
+        return $this->type ?? 0;
     }
 
     /**
@@ -158,34 +158,49 @@ class Image
     /**
      * Open image from local path or URL.
      *
+     * Supported formats: GIF, JPG, PNG. If a local file does not exist, is not readable, is empty or is not
+     * an image of a supported format, the image is undefined (see `isImageDefined()`).
+     *
      * @param string $path Path to the image file
      * @return $this Fluent interface
      */
     public function path(string $path): Image
     {
+        if (static::isLocalPath($path) && (!\is_file($path) || !\is_readable($path) || \filesize($path) === 0)) {
+            return $this->resetFields();
+        }
+
         $imageSize = \getimagesize($path);
 
         if ($imageSize === false) {
-            return $this;
-        }
-
-        list($this->width, $this->height, $this->type, $attr) = $imageSize;
-
-        switch ($this->type) {
-            case 1:
-                $this->image = \imagecreatefromgif($path);
-                break;
-            case 2:
-                $this->image = \imagecreatefromjpeg($path);
-                break;
-            case 3:
-                $this->image = \imagecreatefrompng($path);
-                break;
-        }
-
-        if ($this->image === false) {
             return $this->resetFields();
         }
+
+        list($width, $height, $type) = $imageSize;
+
+        switch ($type) {
+            case IMAGETYPE_GIF:
+                $image = \imagecreatefromgif($path);
+                break;
+            case IMAGETYPE_JPEG:
+                $image = \imagecreatefromjpeg($path);
+                break;
+            case IMAGETYPE_PNG:
+                $image = \imagecreatefrompng($path);
+                break;
+            default:
+                // Unsupported format (e.g. WebP, BMP).
+                return $this->resetFields();
+        }
+
+        if ($image === false) {
+            return $this->resetFields();
+        }
+
+        $this->image = $image;
+        $this->width = $width;
+        $this->height = $height;
+        $this->type = $type;
 
         if (!\imageistruecolor($this->image)) {
             \imagepalettetotruecolor($this->image);
@@ -195,6 +210,20 @@ class Image
         \imagesavealpha($this->image, true);
 
         return $this;
+    }
+
+    /**
+     * Return true if $path is a local file path (no stream wrapper, or the file:// wrapper).
+     *
+     * @param string $path Path or URL
+     * @return bool True for local paths
+     */
+    private static function isLocalPath(string $path): bool
+    {
+        if (\preg_match('#^([a-z][a-z0-9+.-]*)://#i', $path, $matches) !== 1) {
+            return true;
+        }
+        return \strtolower($matches[1]) === 'file';
     }
 
     /**
@@ -241,6 +270,12 @@ class Image
      */
     public function data(string $data): Image
     {
+        // Check the data first: imagecreatefromstring() raises a warning for data it does not recognize,
+        // and getimagesizefromstring() raises a notice for an empty string.
+        if ($data === '' || \getimagesizefromstring($data) === false) {
+            return $this->resetFields();
+        }
+
         if (($this->image = \imagecreatefromstring($data)) === false) {
             return $this->resetFields();
         }
@@ -298,6 +333,10 @@ class Image
     /**
      * Open image from URL with cURL.
      *
+     * Options passed in `$curlOptions` take precedence over the defaults (user agent, referer, timeout).
+     * If the URL cannot be loaded, does not return a successful HTTP status or does not contain an image,
+     * the image is undefined (see `isImageDefined()`).
+     *
      * @param string $url Url of the image file
      * @param array $curlOptions cURL options
      * @param bool $failOnError If true, throw an exception if the url cannot be loaded
@@ -308,14 +347,18 @@ class Image
     {
         $defaultCurlOptions = [
             CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',
-            CURLOPT_REFERER => \strtolower($_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]),
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT => 5,
         ];
 
+        $referer = static::getCurrentRequestUrl();
+        if ($referer !== null) {
+            $defaultCurlOptions[CURLOPT_REFERER] = \strtolower($referer);
+        }
+
         $curl = \curl_init();
         \curl_setopt($curl, CURLOPT_URL, $url);
-        \curl_setopt_array($curl, $defaultCurlOptions + $curlOptions);
+        \curl_setopt_array($curl, $curlOptions + $defaultCurlOptions);
 
         $image = \curl_exec($curl);
 
@@ -323,13 +366,29 @@ class Image
             throw new \Exception(\curl_error($curl));
         }
 
-        \curl_close($curl);
+        // The handle is freed automatically when $curl goes out of scope (curl_close() is a no-op since PHP 8.0).
+        $statusCode = \curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 
-        if ($image === false) {
+        // Status 0 means the protocol has no status code (e.g. file://).
+        if (!\is_string($image) || ($statusCode !== 0 && ($statusCode < 200 || $statusCode >= 300))) {
             return $this->resetFields();
         }
 
         return $this->data($image);
+    }
+
+    /**
+     * Get the URL of the current HTTP request, or null when not running in a web request (e.g. on the command line).
+     *
+     * @return string|null URL of the current request
+     */
+    private static function getCurrentRequestUrl(): ?string
+    {
+        if (!isset($_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'])) {
+            return null;
+        }
+
+        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
 
@@ -340,11 +399,8 @@ class Image
      */
     public function destroy(): Image
     {
-        if ($this->isImageDefined()) {
-            \imagedestroy($this->image);
-        }
-        $this->resetFields();
-        return $this;
+        // Dropping the reference frees the image (imagedestroy() is a no-op since PHP 8.0).
+        return $this->resetFields();
     }
 
     /**
@@ -753,7 +809,6 @@ class Image
             }
         }
 
-        \imagedestroy($this->image);
         $this->image = $newImage;
 
         return $this;
@@ -865,7 +920,6 @@ class Image
             ) {
                 return [];
             }
-            \imagedestroy($newImg);
 
             $xMin = 0;
             $xMax = 0;
@@ -1027,15 +1081,17 @@ class Image
     }
 
     /**
-     * Draw a polygon.
+     * Draw a polygon. Nothing is drawn if less than 3 points are given.
      *
      * @param int[] $points Array of polygon's points [x1, y1, x2, y2, x3, y3...]
      * @param string $color Hexadecimal string color
+     * @param bool $antialias Draw an antialiased outline
      * @return $this Fluent interface
      */
     public function drawPolygon(array $points, string $color = '000000', $antialias = false): Image
     {
-        if (!$this->isImageDefined()) {
+        // GD needs at least 3 points (6 coordinates) and throws a ValueError otherwise.
+        if (!$this->isImageDefined() || \count($points) < 6) {
             return $this;
         }
 
@@ -1047,18 +1103,10 @@ class Image
 
         if ($antialias) {
             \imageantialias($this->image, true);
-            if (PHP_MAJOR_VERSION >= 8) {
-                \imagepolygon($this->image, $points, $color);
-            } else {
-                \imagepolygon($this->image, $points, \count($points) / 2, $color);
-            }
+            \imagepolygon($this->image, $points, $color);
         }
 
-        if (PHP_MAJOR_VERSION >= 8) {
-            \imagefilledpolygon($this->image, $points, $color);
-        } else {
-            \imagefilledpolygon($this->image, $points, \count($points) / 2, $color);
-        }
+        \imagefilledpolygon($this->image, $points, $color);
 
         if ($antialias) {
             \imageantialias($this->image, false);
