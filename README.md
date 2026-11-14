@@ -1,21 +1,32 @@
-[![Packagist](https://img.shields.io/packagist/dt/DantSu/php-image-editor.svg)](https://packagist.org/packages/DantSu/php-image-editor)
-[![Latest Stable Version](https://poser.pugx.org/DantSu/php-image-editor/v/stable)](https://packagist.org/packages/DantSu/php-image-editor)
-[![GitHub license](https://img.shields.io/github/license/DantSu/php-image-editor.svg)](https://github.com/DantSu/php-image-editor/blob/master/LICENSE)
+[![CI](https://github.com/gexo/php-image-editor/actions/workflows/ci.yml/badge.svg)](https://github.com/gexo/php-image-editor/actions/workflows/ci.yml)
+[![Packagist](https://img.shields.io/packagist/dt/gexo/php-image-editor.svg)](https://packagist.org/packages/gexo/php-image-editor)
+[![Latest Stable Version](https://poser.pugx.org/gexo/php-image-editor/v/stable)](https://packagist.org/packages/gexo/php-image-editor)
+[![GitHub license](https://img.shields.io/github/license/gexo/php-image-editor.svg)](https://github.com/gexo/php-image-editor/blob/master/LICENSE)
 
 # PHP Image Editor
 
 PHP library to easily edit image with GD extension. Resize, crop, merge, draw, and many more options !
 
-## ✨ Supporting
+## About this fork
 
-⭐ Star this repository to support this project. You will contribute to increase the visibility of this library 🙂
+This is a fork of [DantSu/php-image-editor](https://github.com/DantSu/php-image-editor) by Franck Alary.
+It keeps the original API and the `DantSu\PHPImageEditor` namespace, and focuses on compatibility with current PHP versions
+(no deprecations, warnings or notices on PHP 8.1 - 8.5).
+
+The package declares `replace: dantsu/php-image-editor`, so it can be used as a drop-in replacement:
+packages that depend on `dantsu/php-image-editor` will use this fork instead of installing the original as well.
+
+## Requirements
+
+- PHP 8.1 or newer
+- Extensions: `gd`, `curl`, `mbstring`
 
 ## Installation
 
 Install this library easily with composer :
 
 ```cmd
-composer require dantsu/php-image-editor
+composer require gexo/php-image-editor
 ```
 
 ## How to use
@@ -78,6 +89,8 @@ See [DantSu\PHPImageEditor\Image](./docs/classes/DantSu/PHPImageEditor/Image.md)
 ## Contributing
 
 Please fork this repository and contribute back using pull requests.
+
+Run the test suite with `composer test`. The tests fail on any PHP deprecation, warning or notice.
 
 Any contributions, large or small, major features, bug fixes, are welcomed and appreciated but will be thoroughly reviewed.
 
